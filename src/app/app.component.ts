@@ -1,7 +1,7 @@
+import { formatDate } from "@angular/common";
 import { Component } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject } from "rxjs";
-import { appColumns } from "./app.table";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import { TableImplAbstract } from "./shared/components/table-custom/table/table.abstract";
 import { TableFactory } from "./shared/components/table-custom/table/table.factory";
@@ -18,7 +18,24 @@ type Contracts = {
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements TableImplAbstract<Contracts> {
-  columns = new BehaviorSubject<TableColumns<Contracts>[]>(appColumns);
+  columns = new BehaviorSubject<TableColumns<Contracts>[]>([
+    {
+      columnDef: "id",
+      header: "ID <br/> da solicitação",
+      cell: (value: Contracts) =>
+        String(value.id.toString().concat("00000000000")),
+    },
+    {
+      columnDef: "value",
+      header: "TOTAL DE <br/> CONTRATOS",
+      cell: (value: Contracts) => String(value.value),
+    },
+    {
+      columnDef: "description",
+      header: "DESCRIÇÃO <br/> DO CONTRATO",
+      cell: (value: Contracts) => String(value.description),
+    },
+  ]);
 
   dataSource: MatTableDataSource<Contracts>;
 
@@ -31,8 +48,8 @@ export class AppComponent implements TableImplAbstract<Contracts> {
       this.tableFactory.setDataSource([
         {
           id: 1,
-          value: 1,
-          description: 1,
+          value: 2,
+          description: 3,
         },
       ]);
     }, 3000);

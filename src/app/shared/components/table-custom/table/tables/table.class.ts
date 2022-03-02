@@ -16,6 +16,10 @@ export class Table<T>
   }
 
   setDataSource(value: T[]): void {
-    this.dataSource.data = value;
+    this.dataSource = new MatTableDataSource(value);
+  }
+
+  getColumnsToDisplay(): string[] {
+    return this.columns.value.map((column) => column.columnDef);
   }
 }

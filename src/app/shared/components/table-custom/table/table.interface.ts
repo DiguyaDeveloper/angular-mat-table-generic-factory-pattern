@@ -6,4 +6,5 @@ export interface TableInterface<T> {
   columns: BehaviorSubject<TableColumns<T>[]>;
   dataSource: MatTableDataSource<T>;
   setDataSource(value: T[]): void;
+  getColumnsToDisplay(): string[];
 }
