@@ -1,8 +1,8 @@
-import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject } from 'rxjs';
-import { TableColumns } from 'src/app/core/interfaces/table-columns.interface';
-import { TableImplAbstract } from '../table.abstract';
-import { TableInterface } from '../table.interface';
+import { MatTableDataSource } from "@angular/material/table";
+import { BehaviorSubject } from "rxjs";
+import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
+import { TableImplAbstract } from "../table.abstract";
+import { TableInterface } from "../table.interface";
 
 export class Table<T>
   extends TableImplAbstract<T>
@@ -13,5 +13,9 @@ export class Table<T>
     dataSource: MatTableDataSource<T>
   ) {
     super(columns, dataSource);
+  }
+
+  setDataSource(value: T[]): void {
+    this.dataSource.data = value;
   }
 }
