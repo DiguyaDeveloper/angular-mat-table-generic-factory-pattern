@@ -1,0 +1,17 @@
+{{ table.dataSource.data | json }}
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="table.dataSource.data" matSort>
+    <ng-container *ngFor="let column of table.columns | async">
+      <ng-container matColumnDef="{{ column.columnDef }}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <span [innerHTML]="column.header | uppercase"></span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+      </ng-container>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[1, 5]" [pageSize]="10"></mat-paginator>
+</div>

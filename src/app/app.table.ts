@@ -2,16 +2,16 @@ export const appColumns = [
   {
     columnDef: 'id',
     header: 'ID <br/> da solicitação',
-    sortable: true,
+    cell: (value: any) => value,
   },
   {
     columnDef: 'value',
     header: 'TOTAL DE <br/> CONTRATOS',
-    sortable: true,
+    cell: (value: any) => value,
   },
   {
     columnDef: 'description',
     header: 'DESCRIÇÃO <br/> DO CONTRATO',
-    sortable: true,
+    cell: (value: any) => value,
   },
 ];
