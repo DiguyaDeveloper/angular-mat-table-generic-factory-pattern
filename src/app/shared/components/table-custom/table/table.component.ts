@@ -1,17 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { BehaviorSubject } from "rxjs";
-import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
-import { TableInterface } from "./table.interface";
 import { Table } from "./tables/table.class";
 
 @Component({
