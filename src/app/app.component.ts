@@ -26,6 +26,57 @@ export class AppComponent extends TableAbstract<Contracts> {
             `${data.id.toString().concat("00000000000")}`,
         },
       },
+      {
+        header: {
+          columnDef: "value",
+          displayName: "Valor",
+        },
+        cell: {
+          getValue: (data: Contracts) => String(data.id + data.value),
+        },
+      },
+      {
+        header: {
+          columnDef: "description",
+          displayName: "Descrição",
+        },
+        cell: {
+          getValue: (data: Contracts) =>
+            `${data.id.toString().concat(" Description here")}`,
+        },
+      },
     ]);
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.table.setDataSource([
+        {
+          id: 1,
+          description: 3,
+          value: 44,
+        },
+        {
+          id: 1,
+          description: 3,
+          value: 44,
+        },
+        {
+          id: 1,
+          description: 3,
+          value: 44,
+        },
+        {
+          id: 1,
+          description: 3,
+          value: 44,
+        },
+        {
+          id: 1,
+          description: 3,
+          value: 44,
+        },
+      ]);
+    }, 1000);
   }
 }
