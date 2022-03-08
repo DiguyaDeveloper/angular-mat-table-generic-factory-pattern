@@ -1,10 +1,5 @@
-import { formatDate } from "@angular/common";
 import { Component } from "@angular/core";
-import { MatTableDataSource } from "@angular/material/table";
-import { BehaviorSubject } from "rxjs";
-import { TableColumns } from "./core/interfaces/table-columns.interface";
-import { TableImplAbstract } from "./shared/components/table-custom/table/table.abstract";
-import { TableFactory } from "./shared/components/table-custom/table/table.factory";
+import { TableAbstract } from "./shared/components/table-custom/table/table.abstract";
 import { Table } from "./shared/components/table-custom/table/tables/table.class";
 
 type Contracts = {
@@ -12,50 +7,25 @@ type Contracts = {
   value: number;
   description: number;
 };
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements TableImplAbstract<Contracts> {
-  columns = new BehaviorSubject<TableColumns<Contracts>[]>([
-    {
-      columnDef: "id",
-      header: "ID <br/> da solicitação",
-      cell: (value: Contracts) =>
-        String(value.id.toString().concat("00000000000")),
-    },
-    {
-      columnDef: "value",
-      header: "TOTAL DE <br/> CONTRATOS",
-      cell: (value: Contracts) => String(value.value),
-    },
-    {
-      columnDef: "description",
-      header: "DESCRIÇÃO <br/> DO CONTRATO",
-      cell: (value: Contracts) => String(value.description),
-    },
-  ]);
-
-  dataSource: MatTableDataSource<Contracts>;
-
-  tableFactory: Table<Contracts>;
-
-  ngOnInit(): void {
-    this.tableFactory = this.getTableFactory();
-
-    setTimeout(() => {
-      this.tableFactory.setDataSource([
-        {
-          id: 1,
-          value: 2,
-          description: 3,
+export class AppComponent extends TableAbstract<Contracts> {
+  constructor() {
+    super([
+      {
+        header: {
+          columnDef: "id",
+          displayName: "ID <br/> da solicitação",
         },
-      ]);
-    }, 3000);
-  }
-
-  getTableFactory(): Table<Contracts> {
-    return TableFactory.factory(this.columns, []);
+        cell: {
+          getValue: (data: Contracts) =>
+            `${data.id.toString().concat("00000000000")}`,
+        },
+      },
+    ]);
   }
 }

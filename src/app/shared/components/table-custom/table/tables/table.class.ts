@@ -1,18 +1,17 @@
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject } from "rxjs";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
-import { TableImplAbstract } from "../table.abstract";
 import { TableInterface } from "../table.interface";
 
-export class Table<T>
-  extends TableImplAbstract<T>
-  implements TableInterface<T>
-{
-  constructor(
-    columns: BehaviorSubject<TableColumns<T>[]>,
-    dataSource: MatTableDataSource<T>
-  ) {
-    super(columns, dataSource);
+export class Table<T> implements TableInterface<T> {
+  columns: BehaviorSubject<TableColumns<T>[]>;
+  dataSource: MatTableDataSource<T>;
+  paginationType: any;
+  expandable: any;
+
+  constructor(columns: TableColumns<T>[]) {
+    this.columns = new BehaviorSubject<TableColumns<T>[]>(columns);
+    this.dataSource = new MatTableDataSource<T>([]);
   }
 
   setDataSource(value: T[]): void {
@@ -20,6 +19,6 @@ export class Table<T>
   }
 
   getColumnsToDisplay(): string[] {
-    return this.columns.value.map((column) => column.columnDef);
+    return this.columns.value.map((column) => column.header.columnDef);
   }
 }

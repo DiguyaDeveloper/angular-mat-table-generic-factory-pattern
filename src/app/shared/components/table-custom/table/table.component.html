@@ -1,11 +1,13 @@
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="table.dataSource" matSort>
     <ng-container *ngFor="let column of table.columns | async">
-      <ng-container matColumnDef="{{ column.columnDef }}">
+      <ng-container matColumnDef="{{ column.header.columnDef }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <span [innerHTML]="column.header | uppercase"> </span>
+          <span [innerHTML]="column.header.displayName | uppercase"> </span>
         </mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+        <mat-cell *matCellDef="let row">{{
+          column.cell.getValue(row)
+        }}</mat-cell>
       </ng-container>
     </ng-container>
 
