@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { TableAbstract } from "./shared/components/table-custom/table/table.abstract";
-import { Table } from "./shared/components/table-custom/table/tables/table.class";
+import { TableAbstract } from "./core/models/table.abstract";
 
 type Contracts = {
   id: number;

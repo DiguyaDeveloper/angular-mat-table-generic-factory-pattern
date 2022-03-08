@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
-import { TableComponent } from "./table/table.component";
+import { TableComponent } from "./table.component";
 
 @NgModule({
   declarations: [TableComponent],

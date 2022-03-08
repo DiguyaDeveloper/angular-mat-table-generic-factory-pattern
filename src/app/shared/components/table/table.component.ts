@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { Table } from "./tables/table.class";
+import { Table } from "./models/table.class";
 
 @Component({
   selector: "ceccoff-table",
