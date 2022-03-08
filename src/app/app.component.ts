@@ -50,7 +50,7 @@ export class AppComponent extends TableAbstract<Contracts> {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.table.setDataSource([
+      this.tableInstance.setDataSource([
         {
           id: 1,
           description: 3,
