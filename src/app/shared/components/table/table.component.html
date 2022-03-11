@@ -3,11 +3,17 @@
     <ng-container *ngFor="let column of table.columns | async">
       <ng-container matColumnDef="{{ column.header.columnDef }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <span [innerHTML]="column.header.displayName | uppercase"> </span>
+          <ng-container
+            [ngTemplateOutlet]="tableHeader"
+            [ngTemplateOutletContext]="{ header: column.header }"
+          ></ng-container>
         </mat-header-cell>
-        <mat-cell *matCellDef="let row">{{
-          column.cell.getValue(row)
-        }}</mat-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container
+            [ngTemplateOutlet]="tableCell"
+            [ngTemplateOutletContext]="{ column: column, row: row }"
+          ></ng-container>
+        </mat-cell>
       </ng-container>
     </ng-container>
 
@@ -18,5 +24,30 @@
       *matRowDef="let row; columns: table.getColumnsToDisplay()"
     ></mat-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[1, 5]" [pageSize]="10"></mat-paginator>
+  <mat-paginator
+    [pageSize]="table.paginatorAttributes.pageSize"
+    [pageIndex]="table.paginatorAttributes.pageIndex"
+    [length]="table.paginatorAttributes.length"
+    [showFirstLastButtons]="table.paginatorAttributes.showFirstLastButtons"
+    [pageSizeOptions]="table.paginatorAttributes.pageSizeOptions"
+  ></mat-paginator>
 </div>
+
+<!-- Config template to table header -->
+<ng-template #tableHeader let-header="header">
+  <span [innerHTML]="header.displayName | uppercase"> </span>
+</ng-template>
+
+<!-- Config template to table cell -->
+<ng-template #tableCell let-column="column" let-row="row">
+  <ng-container *ngIf="column.cell.getValue; else elseTemplate">
+    {{ column.cell.getValue(row) }}
+  </ng-container>
+  <ng-template #elseTemplate>
+    <!-- show templateRef in cell and return data to father component-->
+    <ng-container
+      [ngTemplateOutlet]="column.cell.templateRef"
+      [ngTemplateOutletContext]="{ $implicit: row[column.header.columnDef] }"
+    ></ng-container>
+  </ng-template>
+</ng-template>

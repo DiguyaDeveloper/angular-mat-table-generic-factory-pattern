@@ -1,5 +1,15 @@
-import { Component } from "@angular/core";
+import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
 import { TableAbstract } from "./core/models/table.abstract";
+import { ImageTemplateRefComponent } from "./shared/components/image-template-ref/image-template-ref.component";
+import { Table } from "./shared/components/table/models/table.class";
 
 type Contracts = {
   id: number;
@@ -12,9 +22,23 @@ type Contracts = {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent extends TableAbstract<Contracts> {
-  constructor() {
-    super([
+export class AppComponent implements AfterViewInit {
+  @ViewChild("image") image: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  tableInstance: Table<Contracts> = new Table<Contracts>([]);
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.tableInstance.setPaginator(this.paginator);
+    setTimeout(() => {
+      this.tableInstance.setDataSourcePaginated(mockData);
+    }, 1000);
+  }
+
+  ngAfterViewInit(): void {
+    this.tableInstance = new Table([
       {
         header: {
           columnDef: "id",
@@ -44,38 +68,75 @@ export class AppComponent extends TableAbstract<Contracts> {
             `${data.id.toString().concat(" Description here")}`,
         },
       },
+      {
+        header: {
+          columnDef: "template",
+          displayName: "Descrição",
+        },
+        cell: {
+          templateRef: this.image,
+        },
+      },
     ]);
   }
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.tableInstance.setDataSource([
-        {
-          id: 1,
-          description: 3,
-          value: 44,
-        },
-        {
-          id: 1,
-          description: 3,
-          value: 44,
-        },
-        {
-          id: 1,
-          description: 3,
-          value: 44,
-        },
-        {
-          id: 1,
-          description: 3,
-          value: 44,
-        },
-        {
-          id: 1,
-          description: 3,
-          value: 44,
-        },
-      ]);
-    }, 1000);
-  }
 }
+
+const mockData = {
+  content: [
+    {
+      id: 1,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 2,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 3,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 4,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 5,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 6,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 7,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 8,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 9,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 10,
+      description: 3,
+      value: 44,
+    },
+  ],
+  totalPages: 2,
+  totalElements: 13,
+  size: 10,
+  number: 1,
+  numberOfElements: 10,
+};

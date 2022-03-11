@@ -10,11 +10,9 @@ import { Table } from "./models/table.class";
 })
 export class TableComponent<T> {
   @Input() table: Table<T>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit(): void {
     this.table.dataSource.sort = this.sort;
-    this.table.dataSource.paginator = this.paginator;
   }
 }
