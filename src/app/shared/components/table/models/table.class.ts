@@ -16,16 +16,10 @@ export class Table<T> implements TableInterface<T> {
 
   constructor(columns: TableColumns<T>[]) {
     this.columns = new BehaviorSubject<TableColumns<T>[]>(columns);
-    this.paginatorAttributes.pageSize = 10;
-    this.paginatorAttributes.pageIndex = 0;
-    this.paginatorAttributes.pageSizeOptions = [5, 10, 20, 100];
-    this.paginatorAttributes.showFirstLastButtons = true;
-    this.paginatorAttributes.length = 0;
   }
 
   setDataSourcePaginated(value: Partial<Page<T>>): void {
-    this.dataSource = new MatTableDataSource(value.content);
-
+    this.dataSource = new MatTableDataSource(value.content || []);
     this.setPaginatorAttributes({
       length: value.totalElements || 0,
       pageIndex: value.number || 0,
@@ -33,8 +27,8 @@ export class Table<T> implements TableInterface<T> {
     });
   }
 
-  setDataSourceAllItemns(value: T[]): void {
-    this.dataSource = new MatTableDataSource(value);
+  setDataSourceAllItemns(data: T[]): void {
+    this.dataSource.data = data;
   }
 
   setPaginatorAttributes({
@@ -47,13 +41,9 @@ export class Table<T> implements TableInterface<T> {
     this.paginatorAttributes.pageSize = pageSize;
   }
 
-  pageEvents(event: PageEvent): void {
+  handlePageEvents(event: PageEvent): void {
     this.paginatorAttributes.pageIndex = event.pageIndex;
     this.paginatorAttributes.pageSize = event.pageSize;
-  }
-
-  setPaginator(paginator: MatPaginator): void {
-    this.dataSource.paginator = paginator;
   }
 
   getColumnsToDisplay(): (string | null)[] {
@@ -69,4 +59,3 @@ export class Table<T> implements TableInterface<T> {
     return null;
   }
 }
-// Artigo Netanel Basal

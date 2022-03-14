@@ -1,14 +1,4 @@
-import {
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild,
-} from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { TableAbstract } from "./core/models/table.abstract";
-import { ImageTemplateRefComponent } from "./shared/components/image-template-ref/image-template-ref.component";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Table } from "./shared/components/table/models/table.class";
 
 type Contracts = {
@@ -24,17 +14,15 @@ type Contracts = {
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild("image") image: ElementRef;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   tableInstance: Table<Contracts> = new Table<Contracts>([]);
 
   constructor() {}
 
   ngOnInit(): void {
-    this.tableInstance.setPaginator(this.paginator);
     setTimeout(() => {
-      this.tableInstance.setDataSourcePaginated(mockData);
-    }, 1000);
+      this.tableInstance.setDataSourceAllItemns(mockData.content);
+    }, 3000);
   }
 
   ngAfterViewInit(): void {
@@ -53,6 +41,7 @@ export class AppComponent implements AfterViewInit {
         header: {
           columnDef: "value",
           displayName: "Valor",
+          hasSorting: true,
         },
         cell: {
           getValue: (data: Contracts) => String(data.id + data.value),
@@ -62,6 +51,7 @@ export class AppComponent implements AfterViewInit {
         header: {
           columnDef: "description",
           displayName: "Descrição",
+          hasSorting: true,
         },
         cell: {
           getValue: (data: Contracts) =>
@@ -83,6 +73,21 @@ export class AppComponent implements AfterViewInit {
 
 const mockData = {
   content: [
+    {
+      id: 1,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 1,
+      description: 3,
+      value: 44,
+    },
+    {
+      id: 1,
+      description: 3,
+      value: 44,
+    },
     {
       id: 1,
       description: 3,

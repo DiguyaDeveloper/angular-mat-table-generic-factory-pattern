@@ -1,3 +1,4 @@
+import { PageEvent } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject } from "rxjs";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
@@ -14,4 +15,5 @@ export interface TableInterface<T> {
   ): void;
   setDataSourceAllItemns(value: T[]): void;
   getColumnsToDisplay(): (string | null)[];
+  handlePageEvents(event: PageEvent): void;
 }

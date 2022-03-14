@@ -25,6 +25,7 @@
     ></mat-row>
   </mat-table>
   <mat-paginator
+    (page)="table.handlePageEvents($event)"
     [pageSize]="table.paginatorAttributes.pageSize"
     [pageIndex]="table.paginatorAttributes.pageIndex"
     [length]="table.paginatorAttributes.length"
@@ -40,14 +41,14 @@
 
 <!-- Config template to table cell -->
 <ng-template #tableCell let-column="column" let-row="row">
-  <ng-container *ngIf="column.cell.getValue; else elseTemplate">
-    {{ column.cell.getValue(row) }}
-  </ng-container>
-  <ng-template #elseTemplate>
+  <ng-container *ngIf="column.cell.templateRef; else elseTemplate">
     <!-- show templateRef in cell and return data to father component-->
     <ng-container
       [ngTemplateOutlet]="column.cell.templateRef"
-      [ngTemplateOutletContext]="{ $implicit: row[column.header.columnDef] }"
+      [ngTemplateOutletContext]="{ $rowData: row }"
     ></ng-container>
+  </ng-container>
+  <ng-template #elseTemplate>
+    {{ column.cell.getValue(row) }}
   </ng-template>
 </ng-template>
