@@ -1,24 +1,37 @@
-import { MatTableDataSource } from "@angular/material/table";
+import { map, Observable } from "rxjs";
+import { PokedexService } from "src/app/core/services/pokedex.service";
+import { Filters } from "./filter.model";
+import { Page } from "./page.model";
+import { Table } from "./table.class";
 
-interface Filters {
-  columns: { [field: string]: string };
-  global: string;
+interface Service<S, T> {
+  get: (parameters?: unknown) => Observable<Page<T>>;
 }
 
-export class DataSource<T> extends MatTableDataSource<T> {
-  filters: Filters = { columns: {}, global: "" };
+export class DataSource<S, T> {
+  constructor(
+    private service: Service<PokedexService, T>,
+    private table: Table<T>
+  ) {}
 
-  constructor(data: T[]) {
-    super(data);
+  getTable(): Table<T> {
+    return this.table;
   }
 
-  filterColumn(filterValue: string, col: string): void {
-    this.filters.columns[col] = filterValue.trim().toLocaleLowerCase();
-    this.filter = JSON.stringify(this.filters);
-  }
+  get<P extends Filters>({
+    parameters,
+    method,
+  }: {
+    parameters: P;
+    method: string;
+  }): Observable<Page<T>> {
+    if (!method) throw new Error("Method name is required");
 
-  filterGlobal(filterValue: string): void {
-    this.filters.global = filterValue.trim().toLocaleLowerCase();
-    this.filter = JSON.stringify(this.filters);
+    return this.service.get(parameters).pipe(
+      map((response) => {
+        this.table.setDataSourcePaginated(response);
+        return response;
+      })
+    );
   }
 }

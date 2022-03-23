@@ -15,5 +15,4 @@ export interface TableInterface<T> {
   ): void;
   setDataSourceAllItemns(value: T[]): void;
   getColumnsToDisplay(): (string | null)[];
-  handlePageEvents(event: PageEvent): void;
 }

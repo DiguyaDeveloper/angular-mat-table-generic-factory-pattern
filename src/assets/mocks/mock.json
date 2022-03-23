@@ -1,0 +1,59 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 2,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 3,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 4,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 5,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 6,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 7,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 8,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 9,
+      "description": 3,
+      "value": 44
+    },
+    {
+      "id": 10,
+      "description": 3,
+      "value": 44
+    }
+  ],
+  "totalPages": 2,
+  "totalElements": 13,
+  "size": 10,
+  "number": 0,
+  "numberOfElements": 10
+}

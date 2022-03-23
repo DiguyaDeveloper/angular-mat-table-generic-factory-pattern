@@ -41,11 +41,6 @@ export class Table<T> implements TableInterface<T> {
     this.paginatorAttributes.pageSize = pageSize;
   }
 
-  handlePageEvents(event: PageEvent): void {
-    this.paginatorAttributes.pageIndex = event.pageIndex;
-    this.paginatorAttributes.pageSize = event.pageSize;
-  }
-
   getColumnsToDisplay(): (string | null)[] {
     return this.columns.value.map((column) => this.validate(column));
   }

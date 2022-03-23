@@ -26,17 +26,3 @@ interface Sort {
   unsorted: boolean;
   empty: boolean;
 }
-
-export class Filter {
-  page: number;
-  size: number;
-  offset?: number;
-  sort?: string;
-
-  constructor({ page, size, offset, sort }: Partial<Filter>) {
-    this.offset = offset;
-    this.page = page || 0;
-    this.size = size || 10;
-    this.sort = sort;
-  }
-}

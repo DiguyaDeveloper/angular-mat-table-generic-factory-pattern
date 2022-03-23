@@ -1,13 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { TableModule } from "./components/table/table.module";
-import { ImageTemplateRefComponent } from './components/image-template-ref/image-template-ref.component';
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
-  declarations: [
-    ImageTemplateRefComponent
-  ],
-  imports: [CommonModule, TableModule],
+  declarations: [],
+  imports: [CommonModule, TableModule, MatPaginatorModule, MatSortModule],
   exports: [TableModule],
 })
 export class SharedModule {}

@@ -1,11 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { Contracts } from "./core/interfaces/contract.interface";
+import { PokedexService } from "./core/services/pokedex.service";
+import { DataSource } from "./shared/components/table/models/data-source";
 import { Table } from "./shared/components/table/models/table.class";
-
-type Contracts = {
-  id: number;
-  value: number;
-  description: number;
-};
 
 @Component({
   selector: "app-root",
@@ -16,13 +13,18 @@ export class AppComponent implements AfterViewInit {
   @ViewChild("image") image: ElementRef;
 
   tableInstance: Table<Contracts> = new Table<Contracts>([]);
+  dataSource: DataSource<PokedexService, Contracts>;
 
-  constructor() {}
+  constructor(private myService: PokedexService) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.tableInstance.setDataSourceAllItemns(mockData.content);
-    }, 3000);
+    this.dataSource = new DataSource<PokedexService, Contracts>(
+      this.myService,
+      this.tableInstance
+    );
+    this.myService.get().subscribe((response) => {
+      this.tableInstance.setDataSourcePaginated(response);
+    });
   }
 
   ngAfterViewInit(): void {
@@ -70,78 +72,3 @@ export class AppComponent implements AfterViewInit {
     ]);
   }
 }
-
-const mockData = {
-  content: [
-    {
-      id: 1,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 1,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 1,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 1,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 2,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 3,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 4,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 5,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 6,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 7,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 8,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 9,
-      description: 3,
-      value: 44,
-    },
-    {
-      id: 10,
-      description: 3,
-      value: 44,
-    },
-  ],
-  totalPages: 2,
-  totalElements: 13,
-  size: 10,
-  number: 1,
-  numberOfElements: 10,
-};
