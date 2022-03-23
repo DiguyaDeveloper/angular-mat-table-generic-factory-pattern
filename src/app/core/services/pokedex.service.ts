@@ -11,4 +11,7 @@ export class PokedexService {
   get(): Observable<any> {
     return this.httpClient.get("../../../assets/mocks/mock.json");
   }
+  get2(): Observable<any> {
+    return this.httpClient.get("../../../assets/mocks/mock2.json");
+  }
 }

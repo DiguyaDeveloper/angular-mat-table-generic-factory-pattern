@@ -9,14 +9,11 @@ import {
   PaginatorAttributesToSet,
 } from "./paginator-attributes";
 
-export class Table<T> implements TableInterface<T> {
-  columns: BehaviorSubject<TableColumns<T>[]>;
+export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   paginatorAttributes: PaginatorAttributes = new PaginatorAttributes();
 
-  constructor(columns: TableColumns<T>[]) {
-    this.columns = new BehaviorSubject<TableColumns<T>[]>(columns);
-  }
+  constructor() {}
 
   setDataSourcePaginated(value: Partial<Page<T>>): void {
     this.dataSource = new MatTableDataSource(value.content || []);
@@ -39,18 +36,5 @@ export class Table<T> implements TableInterface<T> {
     this.paginatorAttributes.length = length;
     this.paginatorAttributes.pageIndex = pageIndex;
     this.paginatorAttributes.pageSize = pageSize;
-  }
-
-  getColumnsToDisplay(): (string | null)[] {
-    return this.columns.value.map((column) => this.validate(column));
-  }
-
-  validate(column: TableColumns<T>): string | null {
-    const { columnDef } = column.header;
-
-    if (columnDef) {
-      return columnDef;
-    }
-    return null;
   }
 }

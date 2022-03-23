@@ -14,10 +14,6 @@ export class DataSource<S, T> {
     private table: Table<T>
   ) {}
 
-  getTable(): Table<T> {
-    return this.table;
-  }
-
   get<P extends Filters>({
     parameters,
     method,
@@ -25,6 +21,7 @@ export class DataSource<S, T> {
     parameters: P;
     method: string;
   }): Observable<Page<T>> {
+    if (!this.service) throw new Error("Service inject not work");
     if (!method) throw new Error("Method name is required");
 
     return this.service.get(parameters).pipe(

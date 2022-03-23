@@ -1,18 +1,12 @@
 import { PageEvent } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
-import { BehaviorSubject } from "rxjs";
+import { Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
-import { Page } from "./models/page.model";
-import { PaginatorAttributesToSet } from "./models/paginator-attributes";
+import { Table } from "./models/table.class";
 
 export interface TableInterface<T> {
-  columns: BehaviorSubject<TableColumns<T>[]>;
-  dataSource: MatTableDataSource<T>;
-
-  setDataSourcePaginated(
-    value: Page<T>,
-    paginator: PaginatorAttributesToSet
-  ): void;
-  setDataSourceAllItemns(value: T[]): void;
-  getColumnsToDisplay(): (string | null)[];
+  tableInstance: Table<T>;
+  columns: TableColumns<T>[];
+  paginationEvent(event: PageEvent): void;
+  sortEvent?(event: Sort): void;
+  selectEvent(event: T[]): void;
 }

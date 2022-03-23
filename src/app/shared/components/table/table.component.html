@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource.getTable().dataSource" matSort>
-    <ng-container *ngFor="let column of dataSource.getTable().columns | async">
+  <mat-table [dataSource]="table.dataSource" matSort>
+    <ng-container *ngFor="let column of columns">
       <ng-container matColumnDef="{{ column.header.columnDef }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <ng-container
@@ -17,24 +17,16 @@
       </ng-container>
     </ng-container>
 
-    <mat-header-row
-      *matHeaderRowDef="dataSource.getTable().getColumnsToDisplay()"
-    ></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: dataSource.getTable().getColumnsToDisplay()"
-    ></mat-row>
+    <mat-header-row *matHeaderRowDef="getColumnsToDisplay()"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: getColumnsToDisplay()"></mat-row>
   </mat-table>
   <mat-paginator
     (page)="pageEvents($event)"
-    [pageSize]="dataSource.getTable().paginatorAttributes.pageSize"
-    [pageIndex]="dataSource.getTable().paginatorAttributes.pageIndex"
-    [length]="dataSource.getTable().paginatorAttributes.length"
-    [showFirstLastButtons]="
-      dataSource.getTable().paginatorAttributes.showFirstLastButtons
-    "
-    [pageSizeOptions]="
-      dataSource.getTable().paginatorAttributes.pageSizeOptions
-    "
+    [pageSize]="table.paginatorAttributes.pageSize"
+    [pageIndex]="table.paginatorAttributes.pageIndex"
+    [length]="table.paginatorAttributes.length"
+    [showFirstLastButtons]="table.paginatorAttributes.showFirstLastButtons"
+    [pageSizeOptions]="table.paginatorAttributes.pageSizeOptions"
   ></mat-paginator>
 </div>
 

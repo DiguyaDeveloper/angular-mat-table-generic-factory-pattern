@@ -1,4 +1,8 @@
-<ceccoff-table [dataSource]="dataSource"></ceccoff-table>
+<ceccoff-table
+  [table]="tableInstance"
+  [columns]="columns"
+  (paginationEvent)="paginationEvent($event)"
+></ceccoff-table>
 
 <!-- {{ tableFactory | json }} -->
 <!-- Config template to table cell -->

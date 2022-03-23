@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
-import { Contracts } from "src/app/core/interfaces/contract.interface";
-import { DataSource } from "./models/data-source";
+import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./models/table.class";
 
 @Component({
@@ -9,11 +8,27 @@ import { Table } from "./models/table.class";
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"],
 })
-export class TableComponent<S, T> {
-  @Input() dataSource: DataSource<S, T>;
-  @Output() eventPagination = new EventEmitter<PageEvent>();
+export class TableComponent<T> {
+  @Input() table: Table<T>;
+  @Input() columns: TableColumns<T>[];
+  @Output() paginationEvent = new EventEmitter<PageEvent>();
 
   pageEvents(event: PageEvent): void {
-    this.eventPagination.emit(event);
+    this.paginationEvent.emit(event);
+  }
+
+  getColumnsToDisplay(): (string | null)[] {
+    return (
+      this.columns && this.columns.map((column) => this.validateColumns(column))
+    );
+  }
+
+  validateColumns(column: TableColumns<T>): string | null {
+    const { columnDef } = column.header;
+
+    if (columnDef) {
+      return columnDef;
+    }
+    return null;
   }
 }
