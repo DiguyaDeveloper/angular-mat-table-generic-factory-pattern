@@ -9,7 +9,7 @@ import {
   PaginatorAttributesToSet,
 } from "./paginator-attributes";
 
-export class Table<T> {
+export class Table<T = unknown> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   paginatorAttributes: PaginatorAttributes = new PaginatorAttributes();
 

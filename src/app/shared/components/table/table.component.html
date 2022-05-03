@@ -1,50 +1,22 @@
 <div class="mat-elevation-z8">
+  <!-- Table -->
   <mat-table [dataSource]="table.dataSource" matSort>
     <ng-container *ngFor="let column of columns">
       <ng-container matColumnDef="{{ column.header.columnDef }}">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <ng-container
-            [ngTemplateOutlet]="tableHeader"
-            [ngTemplateOutletContext]="{ header: column.header }"
-          ></ng-container>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container
-            [ngTemplateOutlet]="tableCell"
-            [ngTemplateOutletContext]="{ column: column, row: row }"
-          ></ng-container>
-        </mat-cell>
+        <ceccoff-table-header [column]="column"></ceccoff-table-header>
+        <ceccoff-table-cell [column]="column"></ceccoff-table-cell>
       </ng-container>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="getColumnsToDisplay()"></mat-header-row>
     <mat-row *matRowDef="let row; columns: getColumnsToDisplay()"></mat-row>
   </mat-table>
-  <mat-paginator
-    (page)="pageEvents($event)"
-    [pageSize]="table.paginatorAttributes.pageSize"
-    [pageIndex]="table.paginatorAttributes.pageIndex"
-    [length]="table.paginatorAttributes.length"
-    [showFirstLastButtons]="table.paginatorAttributes.showFirstLastButtons"
-    [pageSizeOptions]="table.paginatorAttributes.pageSizeOptions"
-  ></mat-paginator>
+  <!-- END Table -->
 </div>
 
-<!-- Config template to table header -->
-<ng-template #tableHeader let-header="header">
-  <span [innerHTML]="header.displayName | uppercase"> </span>
-</ng-template>
-
-<!-- Config template to table cell -->
-<ng-template #tableCell let-column="column" let-row="row">
-  <ng-container *ngIf="column.cell.templateRef; else elseTemplate">
-    <!-- show templateRef in cell and return data to father component-->
-    <ng-container
-      [ngTemplateOutlet]="column.cell.templateRef"
-      [ngTemplateOutletContext]="{ $rowData: row }"
-    ></ng-container>
-  </ng-container>
-  <ng-template #elseTemplate>
-    {{ column.cell.getValue(row) }}
-  </ng-template>
-</ng-template>
+<!-- Paginator -->
+<ceccoff-paginator
+  [table]="table"
+  (paginationEvent)="paginationEvent($event)"
+></ceccoff-paginator>
+<!-- End Paginator -->

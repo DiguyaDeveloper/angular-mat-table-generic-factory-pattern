@@ -5,6 +5,6 @@ export abstract class TableAbstract<T> {
   tableInstance: Table<T>;
 
   constructor(columns: TableColumns<T>[]) {
-    this.tableInstance = new Table<T>(columns);
+    this.tableInstance = new Table<T>();
   }
 }

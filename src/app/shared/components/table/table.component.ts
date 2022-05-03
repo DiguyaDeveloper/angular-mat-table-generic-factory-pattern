@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
+import { Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./models/table.class";
 
@@ -11,11 +12,6 @@ import { Table } from "./models/table.class";
 export class TableComponent<T> {
   @Input() table: Table<T>;
   @Input() columns: TableColumns<T>[];
-  @Output() paginationEvent = new EventEmitter<PageEvent>();
-
-  pageEvents(event: PageEvent): void {
-    this.paginationEvent.emit(event);
-  }
 
   getColumnsToDisplay(): (string | null)[] {
     return (
@@ -31,4 +27,10 @@ export class TableComponent<T> {
     }
     return null;
   }
+
+  selectEvent(event: T[]): void {}
+
+  sortEvent(event: Sort): void {}
+
+  paginationEvent(event: PageEvent): void {}
 }

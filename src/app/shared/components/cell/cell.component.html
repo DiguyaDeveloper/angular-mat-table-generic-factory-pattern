@@ -1,0 +1,20 @@
+<mat-cell *matCellDef="let row">
+  <ng-container
+    [ngTemplateOutlet]="tableCell"
+    [ngTemplateOutletContext]="{ column: column, row: row }"
+  ></ng-container>
+</mat-cell>
+
+<!-- Config template to table cell -->
+<ng-template #tableCell let-column="column" let-row="row">
+  <ng-container *ngIf="column.cell.templateRef; else elseTemplate">
+    <!-- show templateRef in cell and return data to father component-->
+    <ng-container
+      [ngTemplateOutlet]="column.cell.templateRef"
+      [ngTemplateOutletContext]="{ $rowData: row }"
+    ></ng-container>
+  </ng-container>
+  <ng-template #elseTemplate>
+    {{ column.cell.getValue(row) }}
+  </ng-template>
+</ng-template>
