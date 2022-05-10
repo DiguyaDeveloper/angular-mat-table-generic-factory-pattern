@@ -1,15 +1,10 @@
 export class Page<T> {
   content: T[];
-  pageable: Pageable | string;
-  last: boolean;
+  pageable: Pageable;
   totalPages: number;
   totalElements: number;
   sort: Sort;
-  size: number;
-  number: number;
   numberOfElements: number;
-  first: boolean;
-  empty: boolean;
 }
 
 interface Pageable {

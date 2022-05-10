@@ -7,6 +7,6 @@ export interface TableInterface<T> {
   tableInstance: Table<T>;
   columns: TableColumns<T>[];
   paginationEvent(event: PageEvent): void;
-  sortEvent?(event: Sort): void;
+  sortEvent(event: Sort): void;
   selectEvent(event: T[]): void;
 }

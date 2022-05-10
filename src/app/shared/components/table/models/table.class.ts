@@ -19,8 +19,8 @@ export class Table<T = unknown> {
     this.dataSource = new MatTableDataSource(value.content || []);
     this.setPaginatorAttributes({
       length: value.totalElements || 0,
-      pageIndex: value.number || 0,
-      pageSize: value.size || 0,
+      pageIndex: value.pageable?.pageNumber || 0,
+      pageSize: value.pageable?.pageSize || 0,
     });
   }
 
