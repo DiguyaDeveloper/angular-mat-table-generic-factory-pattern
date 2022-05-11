@@ -51,9 +51,10 @@
       "value": 44
     }
   ],
-  "totalPages": 2,
-  "totalElements": 13,
-  "size": 10,
-  "number": 0,
-  "numberOfElements": 10
+  "pageable": {
+    "totalPages": 1,
+    "pageNumber": 0,
+    "pageSize": 10,
+    "numberOfElements": 10
+  }
 }
