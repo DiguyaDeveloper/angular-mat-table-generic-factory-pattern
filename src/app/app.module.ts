@@ -6,6 +6,8 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "./shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
+import { CeccoffMockApiModule } from "./core/mocks/mock-api/mock-api.module";
+import { mockApiServices } from "./core/mocks";
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +16,7 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule,
+    CeccoffMockApiModule.forRoot(mockApiServices),
   ],
   providers: [],
   bootstrap: [AppComponent],

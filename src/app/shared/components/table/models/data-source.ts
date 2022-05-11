@@ -1,5 +1,5 @@
 import { map, Observable } from "rxjs";
-import { PokedexService } from "src/app/core/services/pokedex.service";
+import { ProductsService } from "src/app/core/services/products.service";
 import { Filters } from "./filter.model";
 import { Page } from "./page.model";
 import { Table } from "./table.class";
@@ -10,7 +10,7 @@ interface Service<S, T> {
 
 export class DataSource<S, T> {
   constructor(
-    private service: Service<PokedexService, T>,
+    private service: Service<ProductsService, T>,
     private table: Table<T>
   ) {}
 

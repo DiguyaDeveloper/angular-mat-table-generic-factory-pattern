@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class PokedexService {
+export class ProductsService {
   constructor(private httpClient: HttpClient) {}
 
   get(): Observable<any> {

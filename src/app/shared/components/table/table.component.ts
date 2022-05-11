@@ -32,7 +32,7 @@ export class TableComponent<T> {
 
   sortEvent(event: Sort): void {}
 
-  paginationEvent(event: PageEvent): void {
-    this.table.setPaginatorAttributes(event);
+  paginationEvent(pageEvent: PageEvent): void {
+    this.table.setPaginatorAttributes(pageEvent);
   }
 }

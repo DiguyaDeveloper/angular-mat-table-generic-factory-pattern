@@ -5,9 +5,11 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
+import { take } from "rxjs";
 import { Contracts } from "./core/interfaces/contract.interface";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
-import { PokedexService } from "./core/services/pokedex.service";
+import { ProductsService } from "./core/services/products.service";
+import { PaginatorAttributes } from "./shared/components/table/models/paginator-attributes";
 import { Table } from "./shared/components/table/models/table.class";
 
 @Component({
@@ -21,12 +23,22 @@ export class AppComponent implements AfterViewInit {
   tableInstance: Table<Contracts> = new Table<Contracts>();
   tableColumns: TableColumns<Contracts>[];
 
-  constructor(private myService: PokedexService) {}
+  constructor(private myService: ProductsService) {}
 
   ngOnInit(): void {
-    this.myService.get().subscribe((response) => {
-      this.tableInstance.setDataSourcePaginated(response);
+    this.tableInstance.update.subscribe((filters: PaginatorAttributes) => {
+      this.getList(filters);
     });
+    this.getList();
+  }
+
+  getList(pagination?: PaginatorAttributes): void {
+    this.myService
+      .get()
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.tableInstance.setDataSourcePaginated(response);
+      });
   }
 
   ngAfterViewInit(): void {
