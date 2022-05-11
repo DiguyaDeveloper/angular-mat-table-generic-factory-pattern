@@ -1,42 +1,21 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
-import { Sort } from "@angular/material/sort";
 import { Contracts } from "./core/interfaces/contract.interface";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import { PokedexService } from "./core/services/pokedex.service";
 import { Table } from "./shared/components/table/models/table.class";
-import { TableInterface } from "./shared/components/table/table.interface";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements AfterViewInit, TableInterface<Contracts> {
+export class AppComponent implements AfterViewInit {
   @ViewChild("image") image: ElementRef;
 
   tableInstance: Table<Contracts> = new Table<Contracts>();
-  columns: TableColumns<Contracts>[];
+  tableColumns: TableColumns<Contracts>[];
 
   constructor(private myService: PokedexService) {}
-
-  selectEvent(event: Contracts[]): void {
-    this.myService.get2().subscribe((response) => {
-      this.tableInstance.setDataSourcePaginated(response);
-    });
-  }
-
-  sortEvent(event: Sort): void {
-    this.myService.get2().subscribe((response) => {
-      this.tableInstance.setDataSourcePaginated(response);
-    });
-  }
-
-  paginationEvent(event: PageEvent): void {
-    this.myService.get2().subscribe((response) => {
-      this.tableInstance.setDataSourcePaginated(response);
-    });
-  }
 
   ngOnInit(): void {
     this.myService.get().subscribe((response) => {
@@ -45,7 +24,7 @@ export class AppComponent implements AfterViewInit, TableInterface<Contracts> {
   }
 
   ngAfterViewInit(): void {
-    this.columns = [
+    this.tableColumns = [
       {
         header: {
           columnDef: "id",

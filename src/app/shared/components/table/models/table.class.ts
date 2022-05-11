@@ -1,15 +1,11 @@
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { BehaviorSubject } from "rxjs";
-import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
-import { TableInterface } from "../table.interface";
 import { Page } from "./page.model";
 import {
   PaginatorAttributes,
   PaginatorAttributesToSet,
 } from "./paginator-attributes";
 
-export class Table<T = unknown> {
+export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   paginatorAttributes: PaginatorAttributes = new PaginatorAttributes();
 
@@ -22,10 +18,6 @@ export class Table<T = unknown> {
       pageIndex: value.pageable?.pageNumber || 0,
       pageSize: value.pageable?.pageSize || 0,
     });
-  }
-
-  setDataSourceAllItemns(data: T[]): void {
-    this.dataSource.data = data;
   }
 
   setPaginatorAttributes({
