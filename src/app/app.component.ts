@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
 import { Contracts } from "./core/interfaces/contract.interface";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import { PokedexService } from "./core/services/pokedex.service";
@@ -10,7 +16,7 @@ import { Table } from "./shared/components/table/models/table.class";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild("image") image: ElementRef;
+  @ViewChild("image") image: TemplateRef<HTMLElement>;
 
   tableInstance: Table<Contracts> = new Table<Contracts>();
   tableColumns: TableColumns<Contracts>[];
@@ -32,7 +38,7 @@ export class AppComponent implements AfterViewInit {
         },
         cell: {
           getValue: (data: Contracts) =>
-            `${data.id.toString().concat("00000000000")}`,
+            `${data.id?.toString().concat("00000000000")}`,
         },
       },
       {
@@ -42,7 +48,7 @@ export class AppComponent implements AfterViewInit {
           hasSorting: true,
         },
         cell: {
-          getValue: (data: Contracts) => String(data.id + data.value),
+          getValue: (data: Contracts) => String(data?.id + data?.value),
         },
       },
       {
@@ -53,7 +59,7 @@ export class AppComponent implements AfterViewInit {
         },
         cell: {
           getValue: (data: Contracts) =>
-            `${data.id.toString().concat(" Description here")}`,
+            `${data.id?.toString().concat(" Description here")}`,
         },
       },
       {

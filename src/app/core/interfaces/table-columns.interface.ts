@@ -1,4 +1,4 @@
-import { ElementRef } from "@angular/core";
+import { ElementRef, TemplateRef } from "@angular/core";
 interface TableColumnHeader {
   displayName: string;
   /**
@@ -30,7 +30,7 @@ interface TableColumnCellTemplate<T> {
   /**
    * Template to display in cell
    */
-  templateRef: ElementRef;
+  templateRef: TemplateRef<HTMLElement>;
   /**
    * Add action to click a template
    */
@@ -39,5 +39,5 @@ interface TableColumnCellTemplate<T> {
 
 export interface TableColumns<T = object> {
   header: TableColumnHeader;
-  cell: TableColumnCell<T> | TableColumnCellTemplate<T>;
+  cell: Partial<TableColumnCell<T>> & Partial<TableColumnCellTemplate<T>>;
 }

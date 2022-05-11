@@ -3,8 +3,15 @@
   <mat-table [dataSource]="table.dataSource" matSort>
     <ng-container *ngFor="let column of columns">
       <ng-container matColumnDef="{{ column.header.columnDef }}">
-        <ceccoff-table-header [column]="column"></ceccoff-table-header>
-        <ceccoff-table-cell [column]="column"></ceccoff-table-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <ceccoff-table-header [column]="column"></ceccoff-table-header>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ceccoff-table-cell
+            [column]="column"
+            [row]="row"
+          ></ceccoff-table-cell>
+        </mat-cell>
       </ng-container>
     </ng-container>
 

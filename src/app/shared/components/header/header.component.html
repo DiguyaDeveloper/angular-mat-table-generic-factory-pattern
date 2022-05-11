@@ -1,9 +1,7 @@
-<mat-header-cell *matHeaderCellDef mat-sort-header>
-  <ng-container
-    [ngTemplateOutlet]="tableHeader"
-    [ngTemplateOutletContext]="{ header: column.header }"
-  ></ng-container>
-</mat-header-cell>
+<ng-container
+  [ngTemplateOutlet]="tableHeader"
+  [ngTemplateOutletContext]="{ header: column.header }"
+></ng-container>
 
 <!-- Config template to table header -->
 <ng-template #tableHeader let-header="header">

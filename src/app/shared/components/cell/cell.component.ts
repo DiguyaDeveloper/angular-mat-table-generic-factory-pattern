@@ -8,6 +8,7 @@ import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 })
 export class CellComponent<T> implements OnInit {
   @Input() column: TableColumns<T>;
+  @Input() row: T;
 
   constructor() {}
 
