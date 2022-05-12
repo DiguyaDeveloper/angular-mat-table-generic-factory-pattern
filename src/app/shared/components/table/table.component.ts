@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
-import { Sort } from "@angular/material/sort";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort, Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./models/table.class";
 
@@ -9,9 +9,35 @@ import { Table } from "./models/table.class";
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"],
 })
-export class TableComponent<T> {
+export class TableComponent<T> implements OnInit {
   @Input() table: Table<T>;
   @Input() columns: TableColumns<T>[];
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  ngOnInit(): void {
+    this.table.dataSource.sort = this.sort;
+
+    this.table.dataSource.sort?.sortChange.subscribe((sort) => {
+      this.sortEvent(sort);
+    });
+  }
+
+  selectEvent(event: T[]): void {}
+
+  sortEvent(sortEvent: Sort): void {
+    this.table.setDataSource({
+      sort: sortEvent.active,
+      order: sortEvent.direction,
+    });
+  }
+
+  paginationEvent(pageEvent: PageEvent): void {
+    this.table.setDataSource({
+      page: pageEvent.pageIndex,
+      size: pageEvent.pageSize,
+    });
+  }
 
   getColumnsToDisplay(): (string | null)[] {
     return (
@@ -26,13 +52,5 @@ export class TableComponent<T> {
       return columnDef;
     }
     return null;
-  }
-
-  selectEvent(event: T[]): void {}
-
-  sortEvent(event: Sort): void {}
-
-  paginationEvent(pageEvent: PageEvent): void {
-    this.table.setPaginatorAttributes(pageEvent);
   }
 }

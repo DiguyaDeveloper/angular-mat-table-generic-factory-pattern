@@ -1,17 +1,30 @@
-export interface Filters extends PaginationFilter {
-  columns: { [field: string]: string };
-}
+export class TableFilter {
+  page?: number;
+  size?: number;
+  sort?: string;
+  order?: "asc" | "desc" | "" = "";
+  search?: string;
+  length?: number = 10;
+  showFirstLastButtons?: boolean = true;
+  pageSizeOptions?: number[] = [5, 10, 20, 100];
 
-class PaginationFilter {
-  page: number;
-  size: number;
-  offset?: number;
-  sort?: "ASC" | "DSC";
-
-  constructor({ page, size, offset, sort }: Partial<PaginationFilter>) {
-    this.offset = offset;
+  constructor({
+    page,
+    size,
+    sort,
+    order,
+    search,
+    length,
+    showFirstLastButtons,
+    pageSizeOptions,
+  }: Partial<TableFilter>) {
     this.page = page || 0;
     this.size = size || 10;
     this.sort = sort;
+    this.order = order;
+    this.search = search;
+    this.length = length || 10;
+    this.showFirstLastButtons = showFirstLastButtons || true;
+    this.pageSizeOptions = pageSizeOptions || [5, 10, 20, 100];
   }
 }

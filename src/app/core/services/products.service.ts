@@ -81,7 +81,6 @@ export class ProductsService {
     pagination: InventoryPagination;
     products: InventoryProduct[];
   }> {
-    debugger;
     return this._httpClient
       .get<{
         pagination: InventoryPagination;

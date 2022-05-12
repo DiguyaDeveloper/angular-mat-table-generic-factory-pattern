@@ -4,10 +4,9 @@ export class Page<T> {
 }
 
 interface Pageable {
-  totalPages: number;
-  pageNumber: number;
+  length: number;
+  pageIndex: number;
   pageSize: number;
-  numberOfElements: number;
 }
 
 interface Sort {

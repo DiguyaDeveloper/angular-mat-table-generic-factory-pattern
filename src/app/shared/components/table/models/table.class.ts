@@ -1,34 +1,30 @@
-import { Injector } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
+import { Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, Observable } from "rxjs";
+import { TableFilter } from "./filter.model";
 import { Page } from "./page.model";
-import { PaginatorAttributes } from "./paginator-attributes";
 
 export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
-  pagination: PaginatorAttributes = new PaginatorAttributes();
+  sort: Sort;
+  filter: TableFilter = new TableFilter({});
 
-  private _update: BehaviorSubject<PaginatorAttributes> = new BehaviorSubject(
-    new PaginatorAttributes()
+  private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(
+    new TableFilter({})
   );
 
-  get update(): Observable<PaginatorAttributes> {
+  get update(): Observable<TableFilter> {
     return this._update.asObservable();
   }
 
   setDataSourcePaginated(value: Page<T>): void {
     this.dataSource = new MatTableDataSource(value.content || []);
-    this.setPaginatorAttributes({
-      length: value.pageable?.numberOfElements,
-      pageIndex: value.pageable.pageNumber,
-      pageSize: value.pageable?.pageSize,
-    });
+    this.filter.size = value.pageable?.pageSize;
+    this.filter.page = value.pageable?.pageIndex;
+    this.filter.length = value.pageable?.length;
   }
 
-  setPaginatorAttributes({ length, pageIndex, pageSize }: PageEvent): void {
-    this.pagination.length = length;
-    this.pagination.pageIndex = pageIndex;
-    this.pagination.pageSize = pageSize;
+  setDataSource(filter: TableFilter): void {
+    this._update.next({ ...this.filter, ...filter });
   }
 }

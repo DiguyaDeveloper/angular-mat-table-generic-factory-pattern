@@ -10,6 +10,7 @@ import {
   InventoryProduct,
   ProductsService,
 } from "./core/services/products.service";
+import { TableFilter } from "./shared/components/table/models/filter.model";
 import { Page } from "./shared/components/table/models/page.model";
 import { Table } from "./shared/components/table/models/table.class";
 
@@ -27,21 +28,18 @@ export class AppComponent implements AfterViewInit {
   constructor(private _productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.getProducts(
-      this.tableInstance.pagination.pageIndex,
-      this.tableInstance.pagination.pageSize,
-      "name",
-      "asc"
-    );
+    this.getProducts({
+      page: this.tableInstance.filter.page,
+      size: this.tableInstance.filter.size,
+      sort: "index",
+      order: "asc",
+    });
+    this.tableInstance.update.subscribe((filter) => {
+      this.getProducts(filter);
+    });
   }
 
-  getProducts(
-    page: number = 0,
-    size: number = 10,
-    sort: string = "name",
-    order: "asc" | "desc" | "" = "asc",
-    search: string = ""
-  ): void {
+  getProducts({ page, size, order, search, sort }: TableFilter): void {
     this._productsService
       .getProducts(page, size, sort, order, search)
       .pipe(take(1))
@@ -49,10 +47,9 @@ export class AppComponent implements AfterViewInit {
         const data: Page<InventoryProduct> = {
           content: response.products,
           pageable: {
-            pageNumber: response.pagination.page,
             pageSize: response.products.length,
-            totalPages: response.pagination.length,
-            numberOfElements: response.pagination.size,
+            pageIndex: response.pagination.page,
+            length: response.pagination.length,
           },
         };
         this.tableInstance.setDataSourcePaginated(data);

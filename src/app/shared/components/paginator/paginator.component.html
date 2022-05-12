@@ -1,8 +1,8 @@
-<ng-container *ngIf="table.pagination as pagination">
+<ng-container *ngIf="table.filter as pagination">
   <mat-paginator
     (page)="pageEvents($event)"
-    [pageSize]="pagination.pageSize"
-    [pageIndex]="pagination.pageIndex"
+    [pageSize]="pagination.size"
+    [pageIndex]="pagination.page"
     [length]="pagination.length"
     [showFirstLastButtons]="pagination.showFirstLastButtons"
     [pageSizeOptions]="pagination.pageSizeOptions"
