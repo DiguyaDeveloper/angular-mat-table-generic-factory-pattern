@@ -1,4 +1,4 @@
-<ng-container *ngIf="table.pagination | async as pagination">
+<ng-container *ngIf="table.pagination as pagination">
   <mat-paginator
     (page)="pageEvents($event)"
     [pageSize]="pagination.pageSize"

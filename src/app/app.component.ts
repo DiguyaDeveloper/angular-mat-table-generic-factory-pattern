@@ -1,15 +1,16 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { take } from "rxjs";
-import { Contracts } from "./core/interfaces/contract.interface";
+import { pipe, take } from "rxjs";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
-import { ProductsService } from "./core/services/products.service";
-import { PaginatorAttributes } from "./shared/components/table/models/paginator-attributes";
+import {
+  InventoryProduct,
+  ProductsService,
+} from "./core/services/products.service";
+import { Page } from "./shared/components/table/models/page.model";
 import { Table } from "./shared/components/table/models/table.class";
 
 @Component({
@@ -20,24 +21,41 @@ import { Table } from "./shared/components/table/models/table.class";
 export class AppComponent implements AfterViewInit {
   @ViewChild("image") image: TemplateRef<HTMLElement>;
 
-  tableInstance: Table<Contracts> = new Table<Contracts>();
-  tableColumns: TableColumns<Contracts>[];
+  tableInstance: Table<InventoryProduct> = new Table<InventoryProduct>();
+  tableColumns: TableColumns<InventoryProduct>[];
 
-  constructor(private myService: ProductsService) {}
+  constructor(private _productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.tableInstance.update.subscribe((filters: PaginatorAttributes) => {
-      this.getList(filters);
-    });
-    this.getList();
+    this.getProducts(
+      this.tableInstance.pagination.pageIndex,
+      this.tableInstance.pagination.pageSize,
+      "name",
+      "asc"
+    );
   }
 
-  getList(pagination?: PaginatorAttributes): void {
-    this.myService
-      .get()
+  getProducts(
+    page: number = 0,
+    size: number = 10,
+    sort: string = "name",
+    order: "asc" | "desc" | "" = "asc",
+    search: string = ""
+  ): void {
+    this._productsService
+      .getProducts(page, size, sort, order, search)
       .pipe(take(1))
       .subscribe((response) => {
-        this.tableInstance.setDataSourcePaginated(response);
+        const data: Page<InventoryProduct> = {
+          content: response.products,
+          pageable: {
+            pageNumber: response.pagination.page,
+            pageSize: response.products.length,
+            totalPages: response.pagination.length,
+            numberOfElements: response.pagination.size,
+          },
+        };
+        this.tableInstance.setDataSourcePaginated(data);
       });
   }
 
@@ -45,32 +63,41 @@ export class AppComponent implements AfterViewInit {
     this.tableColumns = [
       {
         header: {
+          columnDef: "number",
+          displayName: "Index",
+        },
+        cell: {
+          getValue: (data: InventoryProduct) => `${data.number}`,
+        },
+      },
+      {
+        header: {
           columnDef: "id",
           displayName: "ID <br/> da solicitação",
         },
         cell: {
-          getValue: (data: Contracts) =>
+          getValue: (data: InventoryProduct) =>
             `${data.id?.toString().concat("00000000000")}`,
         },
       },
       {
         header: {
-          columnDef: "value",
-          displayName: "Valor",
+          columnDef: "category",
+          displayName: "Categoria",
           hasSorting: true,
         },
         cell: {
-          getValue: (data: Contracts) => String(data?.id + data?.value),
+          getValue: (data: InventoryProduct) => String(data?.id),
         },
       },
       {
         header: {
-          columnDef: "description",
+          columnDef: "name",
           displayName: "Descrição",
           hasSorting: true,
         },
         cell: {
-          getValue: (data: Contracts) =>
+          getValue: (data: InventoryProduct) =>
             `${data.id?.toString().concat(" Description here")}`,
         },
       },

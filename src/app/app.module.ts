@@ -15,6 +15,7 @@ import { mockApiServices } from "./core/mocks";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     SharedModule,
     CeccoffMockApiModule.forRoot(mockApiServices),
   ],

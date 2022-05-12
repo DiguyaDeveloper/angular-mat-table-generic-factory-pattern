@@ -1,7 +1,6 @@
 export class Page<T> {
   content: T[];
   pageable: Pageable;
-  sort: Sort;
 }
 
 interface Pageable {
