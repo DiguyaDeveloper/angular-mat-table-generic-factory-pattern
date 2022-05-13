@@ -102,8 +102,12 @@ export class ProductsInventoryMockApi {
         return [
           200,
           {
-            products,
-            pagination,
+            content: products,
+            pageable: pagination,
+            sort: {
+              sort,
+              order,
+            },
           },
         ];
       });

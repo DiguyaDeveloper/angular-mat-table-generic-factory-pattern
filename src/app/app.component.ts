@@ -45,11 +45,15 @@ export class AppComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe((response) => {
         const data: Page<InventoryProduct> = {
-          content: response.products,
+          content: response.content,
           pageable: {
-            pageSize: response.products.length,
-            pageIndex: response.pagination.page,
-            length: response.pagination.length,
+            pageSize: response.content.length,
+            pageIndex: response.pageable.pageIndex,
+            length: response.pageable.length,
+          },
+          sort: {
+            order: response.sort.order,
+            sort: response.sort.sort,
           },
         };
         this.tableInstance.setDataSourcePaginated(data);
@@ -64,7 +68,7 @@ export class AppComponent implements AfterViewInit {
           displayName: "Index",
         },
         cell: {
-          getValue: (data: InventoryProduct) => `${data.number}`,
+          getValue: (row: InventoryProduct) => `${row.number}`,
         },
       },
       {
@@ -73,8 +77,8 @@ export class AppComponent implements AfterViewInit {
           displayName: "ID <br/> da solicitação",
         },
         cell: {
-          getValue: (data: InventoryProduct) =>
-            `${data.id?.toString().concat("00000000000")}`,
+          getValue: (row: InventoryProduct) =>
+            `${row.id?.toString().concat("00000000000")}`,
         },
       },
       {
@@ -84,7 +88,7 @@ export class AppComponent implements AfterViewInit {
           hasSorting: true,
         },
         cell: {
-          getValue: (data: InventoryProduct) => String(data?.id),
+          getValue: (row: InventoryProduct) => String(row?.id),
         },
       },
       {
@@ -94,8 +98,8 @@ export class AppComponent implements AfterViewInit {
           hasSorting: true,
         },
         cell: {
-          getValue: (data: InventoryProduct) =>
-            `${data.id?.toString().concat(" Description here")}`,
+          getValue: (row: InventoryProduct) =>
+            `${row.id?.toString().concat(" Description here")}`,
         },
       },
       {

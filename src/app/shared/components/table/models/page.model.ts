@@ -1,16 +1,16 @@
 export class Page<T> {
   content: T[];
+  sort: Sort;
   pageable: Pageable;
 }
 
 interface Pageable {
   length: number;
-  pageIndex: number;
-  pageSize: number;
+  pageIndex?: number;
+  pageSize?: number;
 }
 
 interface Sort {
-  sorted: boolean;
-  unsorted: boolean;
-  empty: boolean;
+  sort: string;
+  order: "asc" | "desc" | "";
 }
