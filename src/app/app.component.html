@@ -2,7 +2,8 @@
 
 <!-- {{ tableFactory | json }} -->
 <!-- Config template to table cell -->
-<ng-template #image>
+<ng-template #image let-row="$rowData">
+  {{ row.id | json }}
   <img
     src="assets/icons/instagran.png"
     alt=""

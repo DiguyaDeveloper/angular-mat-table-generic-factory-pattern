@@ -7,6 +7,6 @@
     ></ng-container>
   </ng-container>
   <ng-template #elseTemplate>
-    {{ cell?.getValue(row) }}
+    {{ cell?.getValue && cell?.getValue(row) }}
   </ng-template>
 </ng-container>

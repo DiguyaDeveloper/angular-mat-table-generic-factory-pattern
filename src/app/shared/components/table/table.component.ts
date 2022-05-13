@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
@@ -15,12 +21,15 @@ export class TableComponent<T> implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+
   ngOnInit(): void {
     this.table.dataSource.sort = this.sort;
 
     this.table.dataSource.sort?.sortChange.subscribe((sort) => {
       this.sortEvent(sort);
     });
+    this._changeDetectorRef.detectChanges();
   }
 
   selectEvent(event: T[]): void {}

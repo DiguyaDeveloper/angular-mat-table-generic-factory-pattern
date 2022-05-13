@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   TemplateRef,
   ViewChild,
@@ -11,16 +13,16 @@ import {
   ProductsService,
 } from "./core/services/products.service";
 import { TableFilter } from "./shared/components/table/models/filter.model";
-import { Page } from "./shared/components/table/models/page.model";
 import { Table } from "./shared/components/table/models/table.class";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild("image") image: TemplateRef<HTMLElement>;
+  @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
   tableInstance: Table<InventoryProduct> = new Table<InventoryProduct>();
   tableColumns: TableColumns<InventoryProduct>[];
@@ -28,27 +30,6 @@ export class AppComponent implements AfterViewInit {
   constructor(private _productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.getProducts({
-      page: this.tableInstance.filter.page,
-      size: this.tableInstance.filter.size,
-      sort: "index",
-      order: "asc",
-    });
-    this.tableInstance.update.subscribe((filter) => {
-      this.getProducts(filter);
-    });
-  }
-
-  getProducts({ page, size, order, search, sort }: TableFilter): void {
-    this._productsService
-      .getProducts(page, size, sort, order, search)
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.tableInstance.setDataSourcePaginated(response);
-      });
-  }
-
-  ngAfterViewInit(): void {
     this.tableColumns = [
       {
         header: {
@@ -100,5 +81,25 @@ export class AppComponent implements AfterViewInit {
         },
       },
     ];
+    this.getProducts({
+      page: this.tableInstance.filter.page,
+      size: this.tableInstance.filter.size,
+      sort: "index",
+      order: "asc",
+    });
+    this.tableInstance.update.subscribe((filter) => {
+      this.getProducts(filter);
+    });
   }
+
+  getProducts({ page, size, order, search, sort }: TableFilter): void {
+    this._productsService
+      .getProducts(page, size, sort, order, search)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.tableInstance.setDataSourcePaginated(response);
+      });
+  }
+
+  ngAfterViewInit(): void {}
 }
