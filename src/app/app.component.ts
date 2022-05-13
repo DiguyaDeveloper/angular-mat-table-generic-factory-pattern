@@ -31,6 +31,28 @@ export class AppComponent implements OnInit {
   constructor(private _productsService: ProductsService) {}
 
   ngOnInit(): void {
+    this.configureColumns();
+    this.getProducts({
+      page: this.tableInstance.filter.page,
+      size: this.tableInstance.filter.size,
+      sort: "index",
+      order: "asc",
+    });
+    this.tableInstance.update.subscribe((filter) => {
+      this.getProducts(filter);
+    });
+  }
+
+  getProducts({ page, size, order, search, sort }: TableFilter): void {
+    this._productsService
+      .getProducts(page, size, sort, order, search)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.tableInstance.setDataSourcePaginated(response);
+      });
+  }
+
+  private configureColumns(): void {
     this.tableColumns = [
       {
         header: {
@@ -82,23 +104,5 @@ export class AppComponent implements OnInit {
         },
       },
     ];
-    this.getProducts({
-      page: this.tableInstance.filter.page,
-      size: this.tableInstance.filter.size,
-      sort: "index",
-      order: "asc",
-    });
-    this.tableInstance.update.subscribe((filter) => {
-      this.getProducts(filter);
-    });
-  }
-
-  getProducts({ page, size, order, search, sort }: TableFilter): void {
-    this._productsService
-      .getProducts(page, size, sort, order, search)
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.tableInstance.setDataSourcePaginated(response);
-      });
   }
 }
