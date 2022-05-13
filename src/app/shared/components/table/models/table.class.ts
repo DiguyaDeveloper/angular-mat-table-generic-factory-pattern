@@ -19,12 +19,12 @@ export class Table<T> {
 
   setDataSourcePaginated(value: Page<T>): void {
     this.dataSource = new MatTableDataSource(value.content || []);
-    this.filter.size = value.pageable?.pageSize;
     this.filter.page = value.pageable?.pageIndex;
     this.filter.length = value.pageable?.length;
   }
 
   setDataSource(filter: TableFilter): void {
+    this.filter = { ...this.filter, ...filter };
     this._update.next({ ...this.filter, ...filter });
   }
 }
