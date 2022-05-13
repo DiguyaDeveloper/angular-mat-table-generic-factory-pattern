@@ -6,7 +6,6 @@ import { Page } from "./page.model";
 
 export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
-  sort: Sort;
   filter: TableFilter = new TableFilter({});
 
   private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(

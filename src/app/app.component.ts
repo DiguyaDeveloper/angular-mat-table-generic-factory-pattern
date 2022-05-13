@@ -4,7 +4,7 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { pipe, take } from "rxjs";
+import { take } from "rxjs";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import {
   InventoryProduct,
@@ -44,19 +44,7 @@ export class AppComponent implements AfterViewInit {
       .getProducts(page, size, sort, order, search)
       .pipe(take(1))
       .subscribe((response) => {
-        const data: Page<InventoryProduct> = {
-          content: response.content,
-          pageable: {
-            pageSize: response.content.length,
-            pageIndex: response.pageable.pageIndex,
-            length: response.pageable.length,
-          },
-          sort: {
-            order: response.sort.order,
-            sort: response.sort.sort,
-          },
-        };
-        this.tableInstance.setDataSourcePaginated(data);
+        this.tableInstance.setDataSourcePaginated(response);
       });
   }
 
