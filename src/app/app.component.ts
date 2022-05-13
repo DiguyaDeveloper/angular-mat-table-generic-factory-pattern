@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from "@angular/core";
@@ -21,7 +22,7 @@ import { Table } from "./shared/components/table/models/table.class";
   styleUrls: ["./app.component.scss"],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit {
   @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
   tableInstance: Table<InventoryProduct> = new Table<InventoryProduct>();
@@ -100,6 +101,4 @@ export class AppComponent implements AfterViewInit {
         this.tableInstance.setDataSourcePaginated(response);
       });
   }
-
-  ngAfterViewInit(): void {}
 }
