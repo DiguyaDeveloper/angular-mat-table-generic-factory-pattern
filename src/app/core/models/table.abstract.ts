@@ -13,7 +13,6 @@ export abstract class TableAbstract<T> {
     private method: string,
     private path: string
   ) {
-    debugger;
     this.table.update.subscribe((filter) => {
       this.getAll(filter);
     });
@@ -22,7 +21,6 @@ export abstract class TableAbstract<T> {
   protected abstract getColumns(): TableColumns<T>[];
 
   getAll({ page, size, order, search, sort }: TableFilter): any {
-    debugger;
     return this.service[this.method](page, size, sort, order, search, this.path)
       .pipe(take(1))
       .subscribe((response: Page<T>) => {
