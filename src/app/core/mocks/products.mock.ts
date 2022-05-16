@@ -91,7 +91,7 @@ export class ProductsInventoryMockApi {
           pagination = {
             length: productsLength,
             size: size,
-            page: page,
+            pageIndex: page,
             lastPage: lastPage,
             startIndex: begin,
             endIndex: end - 1,
