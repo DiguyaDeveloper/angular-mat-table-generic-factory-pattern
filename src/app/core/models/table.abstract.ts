@@ -18,7 +18,7 @@ export abstract class TableAbstract<T> {
     });
   }
 
-  protected abstract getColumns(): TableColumns<T>[];
+  abstract getColumns(): TableColumns<T>[];
 
   getAll({ page, size, order, search, sort }: TableFilter): any {
     return this.service[this.method](page, size, sort, order, search, this.path)

@@ -7,7 +7,6 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { take } from "rxjs";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import { TableAbstract } from "./core/models/table.abstract";
 import { InventoryProduct, ListService } from "./core/services/list.service";
