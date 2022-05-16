@@ -9,12 +9,8 @@ import {
 } from "@angular/core";
 import { take } from "rxjs";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
-import {
-  InventoryProduct,
-  ProductsService,
-} from "./core/services/products.service";
-import { TableFilter } from "./shared/components/table/models/filter.model";
-import { Table } from "./shared/components/table/models/table.class";
+import { TableAbstract } from "./core/models/table.abstract";
+import { InventoryProduct, ListService } from "./core/services/list.service";
 
 @Component({
   selector: "app-root",
@@ -22,38 +18,22 @@ import { Table } from "./shared/components/table/models/table.class";
   styleUrls: ["./app.component.scss"],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class AppComponent implements OnInit {
+export class AppComponent
+  extends TableAbstract<InventoryProduct>
+  implements OnInit
+{
   @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
-  tableInstance: Table<InventoryProduct> = new Table<InventoryProduct>();
-  tableColumns: TableColumns<InventoryProduct>[];
-
-  constructor(private _productsService: ProductsService) {}
+  constructor(protected _productsService: ListService<InventoryProduct>) {
+    super(_productsService, "getAll", "api/apps/ecommerce/inventory/products");
+  }
 
   ngOnInit(): void {
-    this.configureColumns();
-    this.getProducts({
-      page: this.tableInstance.filter.page,
-      size: this.tableInstance.filter.size,
-      sort: "index",
-      order: "asc",
-    });
-    this.tableInstance.update.subscribe((filter) => {
-      this.getProducts(filter);
-    });
+    super.columns = this.getColumns();
   }
 
-  getProducts({ page, size, order, search, sort }: TableFilter): void {
-    this._productsService
-      .getProducts(page, size, sort, order, search)
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.tableInstance.setDataSourcePaginated(response);
-      });
-  }
-
-  private configureColumns(): void {
-    this.tableColumns = [
+  getColumns(): TableColumns<InventoryProduct>[] {
+    return [
       {
         header: {
           columnDef: "number",
