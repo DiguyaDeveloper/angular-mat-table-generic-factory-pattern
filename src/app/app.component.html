@@ -1,5 +1,10 @@
-<ceccoff-table [table]="table" [columns]="columns"></ceccoff-table>
-
+<div class="mat-app-background basic-container">
+  <ceccoff-table
+    [table]="table"
+    [columns]="columns"
+    [selectable]="true"
+  ></ceccoff-table>
+</div>
 <!-- {{ tableFactory | json }} -->
 <!-- Config template to table cell -->
 <ng-template #image let-row="$rowData">

@@ -6,6 +6,12 @@ import { TableComponent } from "./table.component";
 import { HeaderModule } from "../header/header.module";
 import { PaginatorModule } from "../paginator/paginator.module";
 import { CellModule } from "../cell/cell.module";
+import { MatSelectModule } from "@angular/material/select";
+import {
+  MatCheckboxDefaultOptions,
+  MatCheckboxModule,
+  MAT_CHECKBOX_DEFAULT_OPTIONS,
+} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [TableComponent],
@@ -16,6 +22,8 @@ import { CellModule } from "../cell/cell.module";
     HeaderModule,
     PaginatorModule,
     CellModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [TableComponent],
 })

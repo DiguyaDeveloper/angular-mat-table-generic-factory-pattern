@@ -1,3 +1,4 @@
+import { SelectionModel } from "@angular/cdk/collections";
 import { Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -7,6 +8,7 @@ import { Page } from "./page.model";
 export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   filter: TableFilter = new TableFilter({});
+  dataSelection = new SelectionModel<T>(true, []);
 
   private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
