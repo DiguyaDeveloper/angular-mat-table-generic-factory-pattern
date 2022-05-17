@@ -38,15 +38,15 @@ export interface InventoryPagination {
 @Injectable({
   providedIn: "root",
 })
-export class ListService<T> {
-  private list: BehaviorSubject<T[]> = new BehaviorSubject(null);
+export class ListService<InventoryProduct> {
+  private list: BehaviorSubject<InventoryProduct[]> = new BehaviorSubject(null);
 
   constructor(private _httpClient: HttpClient) {}
 
   /**
    * Getter for products
    */
-  get list$(): Observable<T[]> {
+  get list$(): Observable<InventoryProduct[]> {
     return this.list.asObservable();
   }
 
@@ -65,11 +65,10 @@ export class ListService<T> {
     size: number = 10,
     sort: string = "name",
     order: "asc" | "desc" | "" = "asc",
-    search: string = "",
-    path: string
-  ): Observable<Page<T>> {
+    search: string = ""
+  ): Observable<Page<InventoryProduct>> {
     return this._httpClient
-      .get<Page<T>>(path, {
+      .get<Page<InventoryProduct>>("api/apps/ecommerce/inventory/products", {
         params: {
           page: "" + page,
           size: "" + size,
