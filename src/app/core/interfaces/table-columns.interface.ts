@@ -8,7 +8,7 @@ interface TableColumnHeader {
   /**
    * Define if column has sortable
    */
-  hasSorting?: boolean;
+  disableSort?: boolean;
   /**
    * Custom style to header
    */

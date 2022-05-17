@@ -21,8 +21,6 @@ export class TableComponent<T> implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
-
   ngOnInit(): void {
     this.table.dataSource.sort = this.sort;
 

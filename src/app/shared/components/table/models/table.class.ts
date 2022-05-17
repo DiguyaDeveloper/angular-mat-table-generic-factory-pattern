@@ -24,6 +24,6 @@ export class Table<T> {
 
   setDataSource(filter: TableFilter): void {
     this.filter = { ...this.filter, ...filter };
-    this._update.next({ ...this.filter, ...filter });
+    this._update.next(this.filter);
   }
 }
