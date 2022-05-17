@@ -1,14 +1,12 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
   TemplateRef,
   ViewChild,
 } from "@angular/core";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
-import { TableAbstract } from "./core/models/table.abstract";
+import { TablePaginationAbstract } from "./core/models/table.abstract";
 import { InventoryProduct, ListService } from "./core/services/list.service";
 
 @Component({
@@ -18,13 +16,13 @@ import { InventoryProduct, ListService } from "./core/services/list.service";
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent
-  extends TableAbstract<InventoryProduct>
+  extends TablePaginationAbstract<InventoryProduct>
   implements OnInit
 {
   @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
   constructor(protected _productsService: ListService<InventoryProduct>) {
-    super(_productsService, "getAll", "api/apps/ecommerce/inventory/products");
+    super(_productsService, "getAll");
   }
 
   ngOnInit(): void {
@@ -37,9 +35,16 @@ export class AppComponent
         header: {
           columnDef: "number",
           displayName: "Index",
+          style: { backgroundColor: "red" },
         },
         cell: {
           getValue: (row: InventoryProduct) => `${row.number}`,
+          getStyle: (row: InventoryProduct) => {
+            if (row.number === 1) {
+              return { backgroundColor: "blue" };
+            }
+            return null;
+          },
         },
       },
       {
@@ -56,7 +61,7 @@ export class AppComponent
         header: {
           columnDef: "category",
           displayName: "Categoria",
-          hasSorting: true,
+          disableSort: true,
         },
         cell: {
           getValue: (row: InventoryProduct) => String(row?.id),
@@ -66,7 +71,6 @@ export class AppComponent
         header: {
           columnDef: "name",
           displayName: "Descrição",
-          hasSorting: true,
         },
         cell: {
           getValue: (row: InventoryProduct) =>
