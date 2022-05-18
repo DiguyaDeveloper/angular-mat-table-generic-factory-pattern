@@ -35,55 +35,9 @@ export class AppComponent
         header: {
           columnDef: "number",
           displayName: "Index",
-          style: { backgroundColor: "red" },
         },
         cell: {
           getValue: (row: InventoryProduct) => `${row.number}`,
-          getStyle: (row: InventoryProduct) => {
-            if (row.number === 1) {
-              return { backgroundColor: "blue" };
-            }
-            return null;
-          },
-        },
-      },
-      {
-        header: {
-          columnDef: "id",
-          displayName: "ID <br/> da solicitação",
-        },
-        cell: {
-          getValue: (row: InventoryProduct) =>
-            `${row.id?.toString().concat("00000000000")}`,
-        },
-      },
-      {
-        header: {
-          columnDef: "category",
-          displayName: "Categoria",
-          disableSort: true,
-        },
-        cell: {
-          getValue: (row: InventoryProduct) => String(row?.id),
-        },
-      },
-      {
-        header: {
-          columnDef: "name",
-          displayName: "Descrição",
-        },
-        cell: {
-          getValue: (row: InventoryProduct) =>
-            `${row.id?.toString().concat(" Description here")}`,
-        },
-      },
-      {
-        header: {
-          columnDef: "template",
-          displayName: "Descrição",
-        },
-        cell: {
-          templateRef: this.image,
         },
       },
     ];

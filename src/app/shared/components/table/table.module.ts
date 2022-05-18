@@ -7,14 +7,11 @@ import { HeaderModule } from "../header/header.module";
 import { PaginatorModule } from "../paginator/paginator.module";
 import { CellModule } from "../cell/cell.module";
 import { MatSelectModule } from "@angular/material/select";
-import {
-  MatCheckboxDefaultOptions,
-  MatCheckboxModule,
-  MAT_CHECKBOX_DEFAULT_OPTIONS,
-} from "@angular/material/checkbox";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
+import { TableTestComponent } from "../../table-test/table-test.component";
 @NgModule({
-  declarations: [TableComponent],
+  declarations: [TableComponent, TableTestComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -26,7 +23,7 @@ import { MatIconModule } from "@angular/material/icon";
     MatCheckboxModule,
     MatIconModule,
   ],
-  exports: [TableComponent],
+  exports: [TableComponent, TableTestComponent],
   providers: [],
 })
 export class TableModule {}

@@ -1,1 +1,28 @@
+.table {
+  overflow: auto;
+}
+.detail-row {
+  height: 0;
+}
+.expanded-row {
+  overflow: hidden;
+  display: flex;
+}
+.element-row {
+  position: relative;
+}
+.element-row:not(.expanded):last-child {
+  cursor: pointer;
+}
+.element-row.expanded {
+  border-bottom-color: transparent;
+}
 
+tbody {
+  .mat-row:not(.expanded-row):first-child {
+    background-color: red;
+  }
+  .mat-row:not(.expanded-row):last-child {
+    background-color: red;
+  }
+}

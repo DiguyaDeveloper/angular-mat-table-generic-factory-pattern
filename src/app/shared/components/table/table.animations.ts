@@ -22,9 +22,12 @@ class AnimationDurations {
 // @ Expand / collapse
 // -----------------------------------------------------------------------------------------------------
 export const ExpandCollapse = trigger("expandCollapse", [
-  state("collapsed", style({ height: "0px", minHeight: "0" })),
+  state(
+    "collapsed",
+    style({ height: "0px", minHeight: "0", visibility: "hidden" })
+  ),
 
-  state("expanded", style({ height: "*" })),
+  state("expanded", style({ height: "*", visibility: "visible" })),
 
   // Transition
   transition("collapsed <=> expanded", animate("{{timings}}"), {
