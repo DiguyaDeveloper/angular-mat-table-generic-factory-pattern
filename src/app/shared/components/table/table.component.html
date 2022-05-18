@@ -51,15 +51,10 @@
       *matCellDef="let element"
       [attr.colspan]="displayedColumns.length"
     >
-      <div
-        class="expanded-row"
-        [@expandCollapse]="element === expandable ? 'expanded' : 'collapsed'"
-      >
-        <ng-template
-          [ngTemplateOutlet]="expandable"
-          [ngTemplateOutletContext]="{ $rowData: element }"
-        ></ng-template>
-      </div>
+      <ng-template
+        [ngTemplateOutlet]="expandable"
+        [ngTemplateOutletContext]="{ $rowData: element }"
+      ></ng-template>
     </mat-cell>
   </ng-container>
 
@@ -82,12 +77,13 @@
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  <ng-container *ngIf="expandable">
-    <mat-row
-      *matRowDef="let row; columns: ['expanded']"
-      [@expandCollapse]="row === expandable ? 'expanded' : 'collapsed'"
-    ></mat-row>
-  </ng-container>
+  <mat-row
+    *matRowDef="let row; columns: ['expanded']; when: table.getDataExpanded()"
+    [@expandCollapse]="
+      row === table.getDataExpanded() ? 'expanded' : 'collapsed'
+    "
+    style="overflow: hidden"
+  ></mat-row>
 </mat-table>
 <!-- END Table -->
 
