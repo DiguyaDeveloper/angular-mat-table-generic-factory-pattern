@@ -1,36 +1,41 @@
+import { state, style, trigger } from "@angular/animations";
 import { SelectionModel } from "@angular/cdk/collections";
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
+  OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./models/table.class";
+import { ExpandCollapse } from "./table.animations";
 
 @Component({
   selector: "ceccoff-table",
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  animations: [ExpandCollapse],
 })
-export class TableComponent<T> implements OnInit {
+export class TableComponent<T> implements OnInit, OnDestroy {
   @Input() table: Table<T>;
   @Input() columns: TableColumns<T>[];
   @Input() selectable = false;
   @Input() expandable: TemplateRef<HTMLElement>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  selection = new SelectionModel<T>(true, []);
   displayedColumns: string[] = [];
 
   ngOnInit(): void {
     this.table.dataSource.sort = this.sort;
+    this.table.dataSource.paginator = this.paginator;
 
     this.table.dataSource.sort?.sortChange.subscribe((sort) => {
       this.sortEvent(sort);
@@ -38,8 +43,6 @@ export class TableComponent<T> implements OnInit {
 
     this.setDisplayedColumns();
   }
-
-  selectEvent(event: T[]): void {}
 
   sortEvent(sortEvent: Sort): void {
     this.table.setDataSource({
@@ -85,14 +88,28 @@ export class TableComponent<T> implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected()
-      ? this.selection.clear()
-      : this.table.dataSource.data.forEach((row) => this.selection.select(row));
+      ? this.table.dataSelection.clear()
+      : this.table.dataSource.data.forEach((row) =>
+          this.table.dataSelection.select(row)
+        );
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
+    const numSelected = this.table.dataSelection.selected.length;
     const numRows = this.table.dataSource.data.length;
     return numSelected === numRows;
+  }
+
+  clickShowMore(row: T): void {
+    if (this.table.getDataExpanded() !== row) {
+      this.table.setDataExpanded(row);
+    } else {
+      this.table.setDataExpanded(undefined);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.sort.sortChange.unsubscribe();
   }
 }

@@ -10,6 +10,8 @@ export class Table<T> {
   filter: TableFilter = new TableFilter({});
   dataSelection = new SelectionModel<T>(true, []);
 
+  private dataExpanded: T;
+
   private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
   );
@@ -27,5 +29,13 @@ export class Table<T> {
   setDataSource(filter: TableFilter): void {
     this.filter = { ...this.filter, ...filter };
     this._update.next(this.filter);
+  }
+
+  setDataExpanded(row: T): void {
+    this.dataExpanded = row;
+  }
+
+  getDataExpanded(): T {
+    return this.dataExpanded;
   }
 }

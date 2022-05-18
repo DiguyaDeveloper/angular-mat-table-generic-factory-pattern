@@ -30,28 +30,70 @@
     <mat-header-cell *matHeaderCellDef>
       <mat-checkbox
         (change)="$event ? masterToggle() : null"
-        [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [checked]="table.dataSelection.hasValue() && isAllSelected()"
+        [indeterminate]="table.dataSelection.hasValue() && !isAllSelected()"
       >
       </mat-checkbox>
     </mat-header-cell>
     <mat-cell *matCellDef="let row" [ngStyle]="row.style">
       <mat-checkbox
         (click)="$event.stopPropagation()"
-        (change)="$event ? selection.toggle(row) : null"
-        [checked]="selection.isSelected(row)"
+        (change)="$event ? table.dataSelection.toggle(row) : null"
+        [checked]="table.dataSelection.isSelected(row)"
       >
       </mat-checkbox>
     </mat-cell>
   </ng-container>
 
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expanded" *ngIf="expandable">
+    <mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <div
+        class="expanded-row"
+        [@expandCollapse]="element === expandable ? 'expanded' : 'collapsed'"
+      >
+        <ng-template
+          [ngTemplateOutlet]="expandable"
+          [ngTemplateOutletContext]="{ $rowData: element }"
+        ></ng-template>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Show more Column -->
+  <ng-container matColumnDef="showMore">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let row" class="column-show">
+      <button mat-icon-button (click)="clickShowMore(row)">
+        <ng-container
+          *ngIf="table.getDataExpanded() !== row; else elseTemplate"
+        >
+          <span>Ver mais</span><mat-icon>keyboard_arrow_down</mat-icon>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <span>Ver menos</span><mat-icon>keyboard_arrow_up</mat-icon>
+        </ng-template>
+      </button>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <ng-container *ngIf="expandable">
+    <mat-row
+      *matRowDef="let row; columns: ['expanded']"
+      [@expandCollapse]="row === expandable ? 'expanded' : 'collapsed'"
+    ></mat-row>
+  </ng-container>
 </mat-table>
 <!-- END Table -->
 
 <!-- Paginator -->
 <ceccoff-paginator
+  #paginator
   [table]="table"
   (paginationEvent)="paginationEvent($event)"
 ></ceccoff-paginator>

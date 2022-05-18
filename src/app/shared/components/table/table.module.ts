@@ -12,7 +12,7 @@ import {
   MatCheckboxModule,
   MAT_CHECKBOX_DEFAULT_OPTIONS,
 } from "@angular/material/checkbox";
-
+import { MatIconModule } from "@angular/material/icon";
 @NgModule({
   declarations: [TableComponent],
   imports: [
@@ -24,7 +24,9 @@ import {
     CellModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
   exports: [TableComponent],
+  providers: [],
 })
 export class TableModule {}
