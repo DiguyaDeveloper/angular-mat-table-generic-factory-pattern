@@ -24,7 +24,11 @@ class AnimationDurations {
 export const ExpandCollapse = trigger("expandCollapse", [
   state(
     "collapsed",
-    style({ height: "0px", minHeight: "0", visibility: "hidden" })
+    style({
+      height: "0px",
+      minHeight: "0",
+      visibility: "hidden",
+    })
   ),
 
   state("expanded", style({ height: "*", visibility: "visible" })),
