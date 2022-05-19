@@ -3,6 +3,7 @@
   max-height: 400px;
 }
 .mat-table {
+  background: none !important;
 }
 table {
   width: 100%;
@@ -15,7 +16,7 @@ table {
   display: flex;
 }
 
-.element-detail:not(.expanded-row) {
+tr:not(.element-row-active) {
   background-color: #ffffff;
 }
 

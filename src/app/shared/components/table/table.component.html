@@ -104,7 +104,8 @@
         *matRowDef="let row; columns: ['expanded']"
         style="height: 0"
         [ngClass]="{
-          'element-row': row === table.getDataExpanded()
+          'element-row': row === table.getDataExpanded(),
+          'element-row-active': row === table.getDataExpanded()
         }"
       ></tr>
     </ng-container>
