@@ -7,7 +7,6 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
 } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
@@ -19,7 +18,6 @@ import { ExpandCollapse } from "./table.animations";
   selector: "ceccoff-table",
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"],
-  encapsulation: ViewEncapsulation.None,
   animations: [ExpandCollapse],
 })
 export class TableComponent<T> implements OnInit, OnDestroy {

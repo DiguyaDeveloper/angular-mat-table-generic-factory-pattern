@@ -1,5 +1,5 @@
 <!-- Table -->
-<div class="table">
+<div class="container">
   <table
     mat-table
     [dataSource]="table.dataSource"
@@ -9,15 +9,17 @@
     <!-- Dynamic Column -->
     <ng-container *ngFor="let column of columns">
       <ng-container matColumnDef="{{ column.header.columnDef }}">
-        <mat-header-cell
+        <th
+          mat-header-cell
           *matHeaderCellDef
           mat-sort-header
           [ngStyle]="column?.header?.style"
           [disabled]="column?.header?.disableSort"
         >
           <ceccoff-table-header [column]="column"></ceccoff-table-header>
-        </mat-header-cell>
-        <mat-cell
+        </th>
+        <td
+          mat-cell
           *matCellDef="let row"
           [ngStyle]="column?.cell?.getStyle && column.cell.getStyle(row)"
         >
@@ -25,44 +27,58 @@
             [column]="column"
             [row]="row"
           ></ceccoff-table-cell>
-        </mat-cell>
+        </td>
       </ng-container>
     </ng-container>
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
-      <mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox
           (change)="$event ? masterToggle() : null"
           [checked]="table.dataSelection.hasValue() && isAllSelected()"
           [indeterminate]="table.dataSelection.hasValue() && !isAllSelected()"
         >
         </mat-checkbox>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      </th>
+      <td mat-cell *matCellDef="let row">
         <mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="$event ? table.dataSelection.toggle(row) : null"
           [checked]="table.dataSelection.isSelected(row)"
         >
         </mat-checkbox>
-      </mat-cell>
+      </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expanded">
-      <mat-cell *matCellDef="let element">
-        <ng-template
-          [ngTemplateOutlet]="expandable"
-          [ngTemplateOutletContext]="{ $rowData: element }"
-        ></ng-template>
-      </mat-cell>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="displayedColumns.length"
+        [ngClass]="{
+          'expanded-row': element === table.getDataExpanded()
+        }"
+      >
+        <div
+          class="element-detail"
+          [@expandCollapse]="
+            element == table.getDataExpanded() ? 'expanded' : 'collapsed'
+          "
+        >
+          <ng-template
+            [ngTemplateOutlet]="expandable"
+            [ngTemplateOutletContext]="{ $rowData: element }"
+          ></ng-template>
+        </div>
+      </td>
     </ng-container>
 
     <!-- Show more Column -->
     <ng-container matColumnDef="showMore">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row" class="column-show">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
         <button mat-icon-button (click)="clickShowMore(row)">
           <ng-container
             *ngIf="table.getDataExpanded() !== row; else elseTemplate"
@@ -73,31 +89,24 @@
             <span>Ver menos</span><mat-icon>keyboard_arrow_up</mat-icon>
           </ng-template>
         </button>
-      </mat-cell>
+      </td>
     </ng-container>
 
-    <mat-header-row
-      *matHeaderRowDef="displayedColumns; sticky: true"
-    ></mat-header-row>
-    <mat-row
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr
+      mat-row
       *matRowDef="let row; columns: displayedColumns"
       class="element-row"
-    ></mat-row>
+    ></tr>
     <ng-container *ngIf="expandable">
-      <mat-row
-        *matRowDef="
-          let row;
-          columns: ['expanded'];
-          when: table.getDataExpanded()
-        "
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expanded']"
+        style="height: 0"
         [ngClass]="{
-          'expanded-row': row !== table.getDataExpanded(),
-          'expanded-row-active': row === table.getDataExpanded()
+          'element-row': row === table.getDataExpanded()
         }"
-        [@expandCollapse]="
-          row === table.getDataExpanded() ? 'expanded' : 'collapsed'
-        "
-      ></mat-row>
+      ></tr>
     </ng-container>
   </table>
   <!-- END Table -->

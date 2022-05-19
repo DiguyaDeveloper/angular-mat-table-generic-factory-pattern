@@ -6,6 +6,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { ExpandCollapse } from "../components/table/table.animations";
 
 export interface PeriodicElement {
   name: string;
@@ -19,19 +20,7 @@ export interface PeriodicElement {
   selector: "app-table-test",
   templateUrl: "./table-test.component.html",
   styleUrls: ["./table-test.component.scss"],
-  animations: [
-    trigger("detailExpand", [
-      state(
-        "collapsed",
-        style({ height: "0px", minHeight: "0", display: "none" })
-      ),
-      state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      ),
-    ]),
-  ],
+  animations: [ExpandCollapse],
 })
 export class TableTestComponent {
   dataSource = ELEMENT_DATA;
