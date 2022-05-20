@@ -9,12 +9,13 @@ export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   filter: TableFilter = new TableFilter({});
   dataSelection = new SelectionModel<T>(true, []);
-
   private dataExpanded: T;
 
   private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
   );
+
+  constructor() {}
 
   get update(): Observable<TableFilter> {
     return this._update.asObservable();

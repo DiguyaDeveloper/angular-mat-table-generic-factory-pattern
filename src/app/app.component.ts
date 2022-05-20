@@ -40,6 +40,42 @@ export class AppComponent
           getValue: (row: InventoryProduct) => `${row.number}`,
         },
       },
+      {
+        header: {
+          columnDef: "id",
+          displayName: "Id",
+        },
+        cell: {
+          getValue: (row: InventoryProduct) => `${row.id}`,
+        },
+      },
+      {
+        header: {
+          columnDef: "category",
+          displayName: "Index",
+        },
+        cell: {
+          getValue: (row: InventoryProduct) => `${row.category}`,
+        },
+      },
+      {
+        header: {
+          columnDef: "name",
+          displayName: "Name",
+        },
+        cell: {
+          getValue: (row: InventoryProduct) => `${row.name}`,
+        },
+      },
+      {
+        header: {
+          columnDef: "icon",
+          displayName: "Icon",
+        },
+        cell: {
+          templateRef: this.image,
+        },
+      },
     ];
   }
 }
