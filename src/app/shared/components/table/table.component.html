@@ -67,10 +67,14 @@
             element == table.getDataExpanded() ? 'expanded' : 'collapsed'
           "
         >
-          <ng-template
-            [ngTemplateOutlet]="expandable"
-            [ngTemplateOutletContext]="{ $rowData: element }"
-          ></ng-template>
+          <div class="element-expanded">
+            <div class="element-expanded__container">
+              <ng-template
+                [ngTemplateOutlet]="expandable"
+                [ngTemplateOutletContext]="{ $rowData: element }"
+              ></ng-template>
+            </div>
+          </div>
         </div>
       </td>
     </ng-container>
