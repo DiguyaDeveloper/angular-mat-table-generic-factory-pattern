@@ -1,4 +1,4 @@
-<ng-container *ngIf="table.filter as pagination">
+<ng-container *ngIf="table.filter | async as pagination">
   {{ pagination | json }}
   <mat-paginator
     (page)="pageEvents($event)"

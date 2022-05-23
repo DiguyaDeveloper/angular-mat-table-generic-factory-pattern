@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
 import { TablePaginationAbstract } from "./core/models/table.abstract";
-import { InventoryProduct, ListService } from "./core/services/list.service";
+import { InventoryProduct, TableService } from "./core/services/list.service";
 
 @Component({
   selector: "app-root",
@@ -21,8 +21,8 @@ export class AppComponent
 {
   @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
-  constructor(protected _productsService: ListService<InventoryProduct>) {
-    super(_productsService, "getAll");
+  constructor(protected _tableService: TableService<InventoryProduct>) {
+    super(_tableService, "api/apps/ecommerce/inventory/products");
   }
 
   ngOnInit(): void {
@@ -77,5 +77,14 @@ export class AppComponent
         },
       },
     ];
+  }
+
+  selection(): void {
+    debugger;
+    const table = super.table;
+    console.log("selection", super.table);
+  }
+  expanded(): void {
+    console.log();
   }
 }

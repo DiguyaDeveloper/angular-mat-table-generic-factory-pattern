@@ -43,14 +43,14 @@ export class TableComponent<T> implements OnInit, OnDestroy {
   }
 
   sortEvent(sortEvent: Sort): void {
-    this.table.setDataSource({
+    this.table.setFilters({
       sort: sortEvent.active,
       order: sortEvent.direction,
     });
   }
 
   paginationEvent(pageEvent: PageEvent): void {
-    this.table.setDataSource({
+    this.table.setFilters({
       page: pageEvent.pageIndex,
       size: pageEvent.pageSize,
     });

@@ -1,35 +1,30 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, Observable } from "rxjs";
 import { TableFilter } from "./filter.model";
 import { Page } from "./page.model";
 
 export class Table<T> {
-  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
-  filter: TableFilter = new TableFilter({});
-  dataSelection = new SelectionModel<T>(true, []);
-  private dataExpanded: T;
-
-  private _update: BehaviorSubject<TableFilter> = new BehaviorSubject(
+  private _filter: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
   );
+  private dataExpanded: T;
 
-  constructor() {}
+  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
+  dataSelection = new SelectionModel<T>(true, []);
 
-  get update(): Observable<TableFilter> {
-    return this._update.asObservable();
+  get filter(): Observable<TableFilter> {
+    return this._filter.asObservable();
   }
 
   setDataSourcePaginated(value: Page<T>): void {
     this.dataSource = new MatTableDataSource(value.content || []);
-    this.filter.page = value.pageable?.pageIndex;
-    this.filter.length = value.pageable?.length;
+    this._filter.value.page = value.pageable?.pageIndex;
+    this._filter.value.length = value.pageable?.length;
   }
 
-  setDataSource(filter: TableFilter): void {
-    this.filter = { ...this.filter, ...filter };
-    this._update.next(this.filter);
+  setFilters(filter: TableFilter): void {
+    this._filter.next(filter);
   }
 
   setDataExpanded(row: T): void {
