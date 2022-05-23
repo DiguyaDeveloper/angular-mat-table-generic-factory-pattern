@@ -9,9 +9,8 @@ import { CellModule } from "../cell/cell.module";
 import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
-import { TableTestComponent } from "../../table-test/table-test.component";
 @NgModule({
-  declarations: [TableComponent, TableTestComponent],
+  declarations: [TableComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -23,7 +22,7 @@ import { TableTestComponent } from "../../table-test/table-test.component";
     MatCheckboxModule,
     MatIconModule,
   ],
-  exports: [TableComponent, TableTestComponent],
+  exports: [TableComponent],
   providers: [],
 })
 export class TableModule {}
