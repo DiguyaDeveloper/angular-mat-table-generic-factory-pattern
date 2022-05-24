@@ -100,10 +100,10 @@ export class TableComponent<T> implements OnInit, OnDestroy {
   }
 
   clickShowMore(row: T): void {
-    if (this.table.getDataExpanded() !== row) {
-      this.table.setDataExpanded(row);
+    if (this.table.dataExpanded !== row) {
+      this.table.dataExpanded = row;
     } else {
-      this.table.setDataExpanded(undefined);
+      this.table.dataExpanded = undefined;
     }
   }
 

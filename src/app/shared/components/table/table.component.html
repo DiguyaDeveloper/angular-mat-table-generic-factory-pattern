@@ -58,13 +58,13 @@
         *matCellDef="let element"
         [attr.colspan]="displayedColumns.length"
         [ngClass]="{
-          'expanded-row': element === table.getDataExpanded()
+          'expanded-row': element === table.dataExpanded
         }"
       >
         <div
           class="element-detail"
           [@expandCollapse]="
-            element == table.getDataExpanded() ? 'expanded' : 'collapsed'
+            element == table.dataExpanded ? 'expanded' : 'collapsed'
           "
         >
           <div class="element-expanded">
@@ -84,9 +84,7 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
         <button mat-icon-button (click)="clickShowMore(row)">
-          <ng-container
-            *ngIf="table.getDataExpanded() !== row; else elseTemplate"
-          >
+          <ng-container *ngIf="table.dataExpanded !== row; else elseTemplate">
             <span>Ver mais</span><mat-icon>keyboard_arrow_down</mat-icon>
           </ng-container>
           <ng-template #elseTemplate>
@@ -108,8 +106,8 @@
         *matRowDef="let row; columns: ['expanded']"
         style="height: 0"
         [ngClass]="{
-          'element-row': row === table.getDataExpanded(),
-          'element-row-active': row === table.getDataExpanded()
+          'element-row': row === table.dataExpanded,
+          'element-row-active': row === table.dataExpanded
         }"
       ></tr>
     </ng-container>
