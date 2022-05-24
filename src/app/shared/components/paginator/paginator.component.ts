@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
-import { Table } from "../table/models/table.class";
+import { Table } from "../table/table.class";
 
 @Component({
   selector: "ceccoff-paginator",

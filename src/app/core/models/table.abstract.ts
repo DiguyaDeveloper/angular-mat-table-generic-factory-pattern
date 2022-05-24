@@ -1,7 +1,7 @@
 import { take } from "rxjs";
 import { TableFilter } from "src/app/shared/components/table/models/filter.model";
 import { Page } from "src/app/shared/components/table/models/page.model";
-import { Table } from "src/app/shared/components/table/models/table.class";
+import { Table } from "src/app/shared/components/table/table.class";
 import { TableColumns } from "../interfaces/table-columns.interface";
 import { TableService } from "../services/list.service";
 

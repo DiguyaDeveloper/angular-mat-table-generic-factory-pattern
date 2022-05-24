@@ -1,14 +1,17 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, Observable } from "rxjs";
-import { TableFilter } from "./filter.model";
-import { Page } from "./page.model";
+import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
+import { TableFilter } from "./models/filter.model";
+import { Page } from "./models/page.model";
 
 export class Table<T> {
+  tableInstance: Table<T>;
+  columns: TableColumns<T>[];
   private _filter: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
   );
-  private dataExpanded: T;
+  private _dataExpanded: T;
 
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   dataSelection = new SelectionModel<T>(true, []);
@@ -28,10 +31,10 @@ export class Table<T> {
   }
 
   setDataExpanded(row: T): void {
-    this.dataExpanded = row;
+    this._dataExpanded = row;
   }
 
   getDataExpanded(): T {
-    return this.dataExpanded;
+    return this._dataExpanded;
   }
 }

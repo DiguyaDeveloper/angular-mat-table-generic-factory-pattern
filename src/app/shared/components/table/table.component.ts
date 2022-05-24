@@ -11,7 +11,7 @@ import {
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
-import { Table } from "./models/table.class";
+import { Table } from "./table.class";
 import { ExpandCollapse } from "./table.animations";
 
 @Component({
