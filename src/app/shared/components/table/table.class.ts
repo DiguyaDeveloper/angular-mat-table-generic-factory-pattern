@@ -8,13 +8,13 @@ import { Page } from "./models/page.model";
 export class Table<T> {
   tableInstance: Table<T>;
   columns: TableColumns<T>[];
+  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
+  dataSelection = new SelectionModel<T>(true, []);
+
   private _filter: BehaviorSubject<TableFilter> = new BehaviorSubject(
     new TableFilter({})
   );
   private _dataExpanded: T;
-
-  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
-  dataSelection = new SelectionModel<T>(true, []);
 
   get filter(): Observable<TableFilter> {
     return this._filter.asObservable();
