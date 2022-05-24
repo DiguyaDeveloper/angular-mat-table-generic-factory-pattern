@@ -26,7 +26,7 @@ export class AppComponent
   }
 
   ngOnInit(): void {
-    super.columns = this.getColumns();
+    this.columns = this.getColumns();
   }
 
   getColumns(): TableColumns<InventoryProduct>[] {
@@ -80,11 +80,11 @@ export class AppComponent
   }
 
   selection(): void {
-    debugger;
-    const table = super.table;
-    console.log("selection", super.table);
+    const dataSelection = this.table.dataSelection.selected;
+    window.alert(JSON.stringify(dataSelection));
   }
   expanded(): void {
-    console.log();
+    const dataExpanded = this.table.dataExpanded;
+    window.alert(JSON.stringify(dataExpanded));
   }
 }

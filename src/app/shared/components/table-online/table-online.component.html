@@ -1,7 +1,15 @@
-<ng-container *ngIf="table.filter | async as pagination">
+<ceccoff-table
+  [table]="table"
+  [columns]="columns"
+  [selectable]="true"
+  [expandable]="expandable"
+  (sortEvent)="sortEvent($event)"
+></ceccoff-table>
+
+<ng-container *ngIf="table.currentPage | async as pagination">
   {{ pagination | json }}
   <mat-paginator
-    (page)="pageEvents($event)"
+    (page)="paginationEvent($event)"
     [pageSize]="pagination.size"
     [pageIndex]="pagination.page"
     [length]="pagination.length"

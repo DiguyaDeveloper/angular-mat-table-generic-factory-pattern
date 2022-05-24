@@ -1,29 +1,35 @@
 import { SelectionModel } from "@angular/cdk/collections";
+import { Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, Observable } from "rxjs";
-import { TableFilter } from "./models/filter.model";
+import { TableSort, TablePage } from "./models/filter.model";
 import { Page } from "./models/page.model";
 
 export class Table<T> {
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
   dataSelection = new SelectionModel<T>(true, []);
   dataExpanded: T;
+  isLoading: boolean;
 
-  private _filter: BehaviorSubject<TableFilter> = new BehaviorSubject(
-    new TableFilter({})
+  currentSort: BehaviorSubject<TableSort> = new BehaviorSubject(
+    new TableSort({})
   );
 
-  get filter(): Observable<TableFilter> {
-    return this._filter.asObservable();
-  }
+  currentPage: BehaviorSubject<TablePage> = new BehaviorSubject(
+    new TablePage({})
+  );
 
   setDataSourcePaginated(value: Page<T>): void {
     this.dataSource = new MatTableDataSource(value.content || []);
-    this._filter.value.page = value.pageable?.pageIndex;
-    this._filter.value.length = value.pageable?.length;
+    this.currentPage.value.page = value.pageable?.pageIndex;
+    this.currentPage.value.length = value.pageable?.length;
   }
 
-  setFilters(filter: TableFilter): void {
-    this._filter.next({ ...this._filter.value, ...filter });
+  setSort(filter: TableSort): void {
+    this.currentSort.next({ ...this.currentSort.value, ...filter });
+  }
+
+  setPage(page: TablePage): void {
+    this.currentPage.next({ ...this.currentPage.value, ...page });
   }
 }

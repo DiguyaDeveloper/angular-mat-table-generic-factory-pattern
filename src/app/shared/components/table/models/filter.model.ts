@@ -1,9 +1,6 @@
-export class TableFilter {
+export class TablePage {
   page?: number;
   size?: number;
-  sort?: string;
-  order?: "asc" | "desc" | "" = "";
-  search?: string;
   length?: number = 10;
   showFirstLastButtons?: boolean = true;
   pageSizeOptions?: number[] = [5, 10, 20, 100];
@@ -11,20 +8,28 @@ export class TableFilter {
   constructor({
     page,
     size,
-    sort,
-    order,
-    search,
     length,
     showFirstLastButtons,
     pageSizeOptions,
-  }: Partial<TableFilter>) {
+  }: Partial<TablePage>) {
     this.page = page || 0;
     this.size = size || 10;
-    this.sort = sort;
-    this.order = order;
-    this.search = search;
     this.length = length || 10;
     this.showFirstLastButtons = showFirstLastButtons || true;
     this.pageSizeOptions = pageSizeOptions || [5, 10, 20, 100];
   }
+}
+
+export class TableSort {
+  sort?: string;
+  order?: "asc" | "desc" | "" = "";
+
+  constructor({ sort, order }: Partial<TableSort>) {
+    this.sort = sort;
+    this.order = order;
+  }
+}
+
+export class TableFilter {
+  [key: string]: string;
 }

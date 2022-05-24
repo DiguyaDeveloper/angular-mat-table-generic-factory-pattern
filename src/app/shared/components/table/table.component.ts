@@ -1,18 +1,17 @@
-import { state, style, trigger } from "@angular/animations";
-import { SelectionModel } from "@angular/cdk/collections";
 import {
   Component,
+  EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { MatSort, Sort } from "@angular/material/sort";
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./table.class";
 import { ExpandCollapse } from "./table.animations";
+import { MatSort, Sort } from "@angular/material/sort";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
   selector: "ceccoff-table",
@@ -20,40 +19,25 @@ import { ExpandCollapse } from "./table.animations";
   styleUrls: ["./table.component.scss"],
   animations: [ExpandCollapse],
 })
-export class TableComponent<T> implements OnInit, OnDestroy {
+export class TableComponent<T> implements OnInit {
   @Input() table: Table<T>;
   @Input() columns: TableColumns<T>[];
   @Input() selectable = false;
   @Input() expandable: TemplateRef<HTMLElement>;
+  @Output() sortEvent = new EventEmitter<Sort>(null);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns: string[] = [];
 
   ngOnInit(): void {
     this.table.dataSource.sort = this.sort;
-    this.table.dataSource.paginator = this.paginator;
-
     this.table.dataSource.sort?.sortChange.subscribe((sort) => {
-      this.sortEvent(sort);
+      debugger;
+      this.sortEvent.next(sort);
     });
 
     this.setDisplayedColumns();
-  }
-
-  sortEvent(sortEvent: Sort): void {
-    this.table.setFilters({
-      sort: sortEvent.active,
-      order: sortEvent.direction,
-    });
-  }
-
-  paginationEvent(pageEvent: PageEvent): void {
-    this.table.setFilters({
-      page: pageEvent.pageIndex,
-      size: pageEvent.pageSize,
-    });
   }
 
   setDisplayedColumns(): void {
@@ -61,9 +45,9 @@ export class TableComponent<T> implements OnInit, OnDestroy {
       return;
     }
 
-    this.displayedColumns = this.columns.map((column) =>
-      this.validateColumns(column)
-    );
+    this.displayedColumns = [
+      ...this.columns.map((column) => this.validateColumns(column)),
+    ];
 
     if (this.selectable) {
       this.displayedColumns = ["select", ...this.displayedColumns];
@@ -105,9 +89,5 @@ export class TableComponent<T> implements OnInit, OnDestroy {
     } else {
       this.table.dataExpanded = undefined;
     }
-  }
-
-  ngOnDestroy(): void {
-    this.sort.sortChange.unsubscribe();
   }
 }

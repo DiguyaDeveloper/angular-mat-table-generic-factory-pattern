@@ -62,7 +62,6 @@ export class TableService<T> {
     size: number = 10,
     sort: string = "name",
     order: "asc" | "desc" | "" = "asc",
-    search: string = "",
     pathUrl: string
   ): Observable<Page<T>> {
     return this._httpClient
@@ -72,7 +71,6 @@ export class TableService<T> {
           size: "" + size,
           sort,
           order,
-          search,
         },
       })
       .pipe(

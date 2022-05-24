@@ -1,5 +1,16 @@
-import { take } from "rxjs";
-import { TableFilter } from "src/app/shared/components/table/models/filter.model";
+import {
+  catchError,
+  combineLatest,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+} from "rxjs";
+import {
+  TablePage,
+  TableSort,
+} from "src/app/shared/components/table/models/filter.model";
 import { Page } from "src/app/shared/components/table/models/page.model";
 import { Table } from "src/app/shared/components/table/table.class";
 import { TableColumns } from "../interfaces/table-columns.interface";
@@ -10,19 +21,38 @@ export abstract class TablePaginationAbstract<T> {
   columns: TableColumns<T>[];
 
   constructor(protected service: TableService<T>, private pathUrl: string) {
-    this.table.filter.subscribe((filter) => {
-      this.getAll(filter);
-    });
+    combineLatest([this.table.currentPage, this.table.currentSort])
+      .pipe(
+        switchMap(([sortChange, currentPage]) => {
+          this.table.isLoading = true;
+          return this.getAll({
+            ...sortChange,
+            ...currentPage,
+          });
+        }),
+        map((data) => {
+          this.table.setDataSourcePaginated(data);
+          this.table.isLoading = false;
+          return data;
+        }),
+        catchError(() => {
+          this.table.isLoading = false;
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   abstract getColumns(): TableColumns<T>[];
 
-  getAll({ page, size, order, search, sort }: TableFilter): any {
+  getAll({
+    page,
+    size,
+    order,
+    sort,
+  }: TableSort & TablePage): Observable<Page<T>> {
     return this.service
-      .getAll(page, size, sort, order, search, this.pathUrl)
-      .pipe(take(1))
-      .subscribe((response: Page<T>) => {
-        this.table.setDataSourcePaginated(response);
-      });
+      .getAll(page, size, sort, order, this.pathUrl)
+      .pipe(take(1));
   }
 }
