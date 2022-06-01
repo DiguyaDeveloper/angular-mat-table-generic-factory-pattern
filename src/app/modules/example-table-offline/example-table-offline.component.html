@@ -1,0 +1,25 @@
+<div class="basic-container">
+  <ceccoff-table-offline
+    [table]="tableOffline"
+    [columns]="columns"
+    [selectable]="true"
+    [expandable]="image"
+  ></ceccoff-table-offline>
+
+  <!-- END Table -->
+</div>
+
+<!-- {{ tableFactory | json }} -->
+<!-- Config template to table cell -->
+<ng-template #image let-row="$rowData">
+  {{ row | json }}
+  <img
+    src="assets/icons/instagran.png"
+    alt=""
+    srcset=""
+    width="30px"
+    height="30px"
+  />
+</ng-template>
+<button mat-raised-button (click)="selection()">Selection</button>
+<button mat-raised-button (click)="expanded()">Expanded</button>

@@ -8,10 +8,16 @@ import { SharedModule } from "./shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
 import { CeccoffMockApiModule } from "./core/mocks/mock-api/mock-api.module";
 import { mockApiServices } from "./core/mocks";
-import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { ExampleTableOnlineComponent } from "./modules/example-table-online/example-table-online.component";
+import { ExampleTableOfflineComponent } from "./modules/example-table-offline/example-table-offline.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ExampleTableOnlineComponent,
+    ExampleTableOfflineComponent,
+  ],
   imports: [
     MatPaginatorModule,
     BrowserModule,
