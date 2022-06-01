@@ -118,6 +118,12 @@
         }"
       ></tr>
     </ng-container>
+    <tr *matNoDataRow>
+      <td [attr.colspan]="displayedColumns.length" class="row-no-data">
+        Nada para visualizar aqui.
+      </td>
+    </tr>
+
     <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
   </table>
 </div>

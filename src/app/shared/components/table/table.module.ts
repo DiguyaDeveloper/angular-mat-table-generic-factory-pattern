@@ -10,9 +10,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { CellModule } from "./cell/cell.module";
 import { TableOnlineComponent } from "../table-online/table-online.component";
 import { TableOfflineComponent } from "../table-offline/table-offline.component";
-import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
-import { FooterComponent } from "./footer/footer.component";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { FooterModule } from "./footer/footer.module";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 @NgModule({
   declarations: [TableComponent, TableOfflineComponent, TableOnlineComponent],
   imports: [
@@ -26,6 +26,7 @@ import { FooterModule } from "./footer/footer.module";
     MatIconModule,
     MatSortModule,
     MatPaginatorModule,
+    MatProgressBarModule,
   ],
   exports: [TableComponent, TableOfflineComponent, TableOnlineComponent],
   providers: [],
