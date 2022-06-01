@@ -11,7 +11,6 @@ import { CellModule } from "./cell/cell.module";
 import { TableOnlineComponent } from "../table-online/table-online.component";
 import { TableOfflineComponent } from "../table-offline/table-offline.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
-import { FooterModule } from "./footer/footer.module";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 @NgModule({
   declarations: [TableComponent, TableOfflineComponent, TableOnlineComponent],
@@ -20,7 +19,6 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     MatTableModule,
     HeaderModule,
     CellModule,
-    FooterModule,
     MatSelectModule,
     MatCheckboxModule,
     MatIconModule,

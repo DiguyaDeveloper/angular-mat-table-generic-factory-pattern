@@ -29,13 +29,6 @@
             [row]="row"
           ></ceccoff-table-cell>
         </td>
-
-        <td footer-cell *matFooterCellDef="let row">
-          <ceccoff-table-footer
-            [column]="column"
-            [rows]="table.dataSource.data"
-          ></ceccoff-table-footer>
-        </td>
       </ng-container>
     </ng-container>
 
@@ -91,7 +84,11 @@
     <ng-container matColumnDef="showMore">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="clickShowMore(row)">
+        <button
+          mat-icon-button
+          (click)="clickShowMore(row)"
+          [disabled]="table.isLoading"
+        >
           <ng-container *ngIf="table.dataExpanded !== row; else elseTemplate">
             <span>Ver mais</span><mat-icon>keyboard_arrow_down</mat-icon>
           </ng-container>
