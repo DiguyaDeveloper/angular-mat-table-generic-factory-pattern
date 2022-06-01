@@ -24,16 +24,22 @@ export class TableComponent<T> implements OnInit {
   @Input() columns: TableColumns<T>[];
   @Input() selectable = false;
   @Input() expandable: TemplateRef<HTMLElement>;
+  @Input() sortingOffline: boolean = false;
   @Output() sortEvent = new EventEmitter<Sort>(null);
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns: string[] = [];
 
   ngOnInit(): void {
-    this.table.dataSource.sort?.sortChange.subscribe((sort) => {
-      this.sortEvent.next(sort);
-    });
-
+    this.setSorting();
     this.setDisplayedColumns();
+  }
+
+  setSorting(): void {
+    if (this.sortingOffline) {
+      this.table.dataSource.sort = this.sort;
+    }
   }
 
   setDisplayedColumns(): void {

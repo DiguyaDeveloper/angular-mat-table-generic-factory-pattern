@@ -5,12 +5,13 @@
   [expandable]="expandable"
   (sortEvent)="sortEvent($event)"
 ></ceccoff-table>
+
 <mat-progress-bar
   mode="indeterminate"
   *ngIf="table.isLoading"
 ></mat-progress-bar>
+
 <ng-container *ngIf="table.currentPage | async as pagination">
-  {{ pagination | json }}
   <mat-paginator
     (page)="paginationEvent($event)"
     [pageSize]="pagination.size"
@@ -18,6 +19,6 @@
     [length]="pagination.length"
     [showFirstLastButtons]="pagination.showFirstLastButtons"
     [pageSizeOptions]="pagination.pageSizeOptions"
-    [ngClass]="{ 'pointer-events-none': table.isLoading }"
+    [disabled]="table.isLoading"
   ></mat-paginator>
 </ng-container>

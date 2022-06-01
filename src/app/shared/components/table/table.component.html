@@ -5,6 +5,7 @@
     [dataSource]="table.dataSource"
     matSort
     multiTemplateDataRows
+    (matSortChange)="sortEvent.next($event)"
   >
     <!-- Dynamic Column -->
     <ng-container *ngFor="let column of columns">
@@ -14,7 +15,7 @@
           *matHeaderCellDef
           mat-sort-header
           [ngStyle]="column?.header?.style"
-          [disabled]="column?.header?.disableSort"
+          [disabled]="column?.header?.disableSort || table.isLoading"
         >
           <ceccoff-table-header [column]="column"></ceccoff-table-header>
         </th>

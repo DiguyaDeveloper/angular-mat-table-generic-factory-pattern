@@ -5,9 +5,7 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
-import { TableOfflineAbstract } from "./core/models/table-offline.abstract";
 import { TablePaginationAbstract } from "./core/models/table.abstract";
 import { InventoryProduct, TableService } from "./core/services/list.service";
 import { Table } from "./shared/components/table/table.class";
@@ -51,10 +49,16 @@ export class AppComponent
       {
         header: {
           columnDef: "number",
-          displayName: "Index",
+          displayName: "Valor",
+          style: {
+            backgroundColor: "red",
+          },
         },
         cell: {
           getValue: (row: InventoryProduct) => `${row.number}`,
+          getStyle: () => ({
+            backgroundColor: "blue",
+          }),
         },
       },
       {
@@ -97,11 +101,11 @@ export class AppComponent
   }
 
   selection(): void {
-    const dataSelection = this.table.dataSelection.selected;
+    const dataSelection = this.tableOffline.dataSelection.selected;
     window.alert(JSON.stringify(dataSelection));
   }
   expanded(): void {
-    const dataExpanded = this.table.dataExpanded;
+    const dataExpanded = this.tableOffline.dataExpanded;
     window.alert(JSON.stringify(dataExpanded));
   }
 }
