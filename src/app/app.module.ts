@@ -8,10 +8,12 @@ import { SharedModule } from "./shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
 import { CeccoffMockApiModule } from "./core/mocks/mock-api/mock-api.module";
 import { mockApiServices } from "./core/mocks";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    MatPaginatorModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

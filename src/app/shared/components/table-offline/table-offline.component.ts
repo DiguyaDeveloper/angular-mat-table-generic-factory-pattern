@@ -16,11 +16,17 @@ import { Table } from "../table/table.class";
   templateUrl: "./table-offline.component.html",
   styleUrls: ["./table-offline.component.scss"],
 })
-export class TableOfflineComponent<T> {
+export class TableOfflineComponent<T> implements OnInit {
   @Input() table: Table<T>;
   @Input() columns: TableColumns<T>[];
   @Input() selectable = false;
   @Input() expandable: TemplateRef<HTMLElement>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  ngOnInit(): void {
+    this.table.dataSource.paginator = this.paginator;
+    this.table.dataSource.sort = this.sort;
+  }
 }

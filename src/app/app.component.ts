@@ -5,9 +5,12 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
 import { TableColumns } from "./core/interfaces/table-columns.interface";
+import { TableOfflineAbstract } from "./core/models/table-offline.abstract";
 import { TablePaginationAbstract } from "./core/models/table.abstract";
 import { InventoryProduct, TableService } from "./core/services/list.service";
+import { Table } from "./shared/components/table/table.class";
 
 @Component({
   selector: "app-root",
@@ -21,12 +24,26 @@ export class AppComponent
 {
   @ViewChild("image", { static: true }) image!: TemplateRef<HTMLElement>;
 
-  constructor(protected _tableService: TableService<InventoryProduct>) {
-    super(_tableService, "api/apps/ecommerce/inventory/products");
+  tableOffline: Table<InventoryProduct> = new Table<InventoryProduct>();
+
+  constructor(
+    protected tableService: TableService<InventoryProduct>,
+    private _tableService: TableService<InventoryProduct>
+  ) {
+    super(tableService, "api/apps/ecommerce/inventory/products");
   }
 
   ngOnInit(): void {
     this.columns = this.getColumns();
+    this.getList();
+  }
+
+  getList(): void {
+    this._tableService
+      .getAll(0, 14, "number", "asc", "api/apps/ecommerce/inventory/products")
+      .subscribe((response) => {
+        this.tableOffline.setDataSourcePaginated(response);
+      });
   }
 
   getColumns(): TableColumns<InventoryProduct>[] {

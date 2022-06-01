@@ -26,14 +26,10 @@ export class TableComponent<T> implements OnInit {
   @Input() expandable: TemplateRef<HTMLElement>;
   @Output() sortEvent = new EventEmitter<Sort>(null);
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   displayedColumns: string[] = [];
 
   ngOnInit(): void {
-    this.table.dataSource.sort = this.sort;
     this.table.dataSource.sort?.sortChange.subscribe((sort) => {
-      debugger;
       this.sortEvent.next(sort);
     });
 

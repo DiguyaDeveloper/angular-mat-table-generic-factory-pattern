@@ -24,7 +24,7 @@ export class ProductsInventoryMockApi {
     // @ Products - GET
     // -----------------------------------------------------------------------------------------------------
     this._ceccoffMockApiService
-      .onGet("api/apps/ecommerce/inventory/products", 300)
+      .onGet("api/apps/ecommerce/inventory/products", 1000)
       .reply(({ request }) => {
         // Get available queries
         const search = request.params.get("search");

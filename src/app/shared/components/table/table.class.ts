@@ -20,7 +20,7 @@ export class Table<T> {
   );
 
   setDataSourcePaginated(value: Page<T>): void {
-    this.dataSource = new MatTableDataSource(value.content || []);
+    this.dataSource.data = value.content || [];
     this.currentPage.value.page = value.pageable?.pageIndex;
     this.currentPage.value.length = value.pageable?.length;
   }

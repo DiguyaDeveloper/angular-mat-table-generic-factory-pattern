@@ -37,7 +37,31 @@ interface TableColumnCellTemplate<T> {
   action?: (value: T) => void;
 }
 
+interface TableColumnFooter<T> {
+  /**
+   * Value to display in cell
+   */
+  getValue: (value: T[]) => string;
+  /**
+   * Custom style to cell
+   */
+  getStyle?: (value?: T[]) => Partial<CSSStyleDeclaration>;
+}
+
+interface TableColumnFooterTemplate<T> {
+  /**
+   * Template to display in cell
+   */
+  templateRef: TemplateRef<HTMLElement>;
+  /**
+   * Add action to click a template
+   */
+  action?: (value: T) => void;
+}
+
 export interface TableColumns<T = object> {
   header: TableColumnHeader;
   cell: Partial<TableColumnCell<T>> & Partial<TableColumnCellTemplate<T>>;
+  footer?: Partial<TableColumnFooter<T>> &
+    Partial<TableColumnFooterTemplate<T>>;
 }

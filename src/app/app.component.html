@@ -1,10 +1,23 @@
 <div class="basic-container">
+  <ceccoff-table-offline
+    [table]="tableOffline"
+    [columns]="columns"
+    [selectable]="true"
+    [expandable]="image"
+  ></ceccoff-table-offline>
+
+  <!-- END Table -->
+</div>
+<hr />
+<div class="basic-container">
   <ceccoff-table-online
     [table]="table"
     [columns]="columns"
     [selectable]="true"
     [expandable]="image"
   ></ceccoff-table-online>
+
+  <!-- END Table -->
 </div>
 <!-- {{ tableFactory | json }} -->
 <!-- Config template to table cell -->

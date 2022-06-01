@@ -11,6 +11,8 @@ import { CellModule } from "./cell/cell.module";
 import { TableOnlineComponent } from "../table-online/table-online.component";
 import { TableOfflineComponent } from "../table-offline/table-offline.component";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { FooterComponent } from "./footer/footer.component";
+import { FooterModule } from "./footer/footer.module";
 @NgModule({
   declarations: [TableComponent, TableOfflineComponent, TableOnlineComponent],
   imports: [
@@ -18,6 +20,7 @@ import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
     MatTableModule,
     HeaderModule,
     CellModule,
+    FooterModule,
     MatSelectModule,
     MatCheckboxModule,
     MatIconModule,

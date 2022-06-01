@@ -28,6 +28,13 @@
             [row]="row"
           ></ceccoff-table-cell>
         </td>
+
+        <td footer-cell *matFooterCellDef="let row">
+          <ceccoff-table-footer
+            [column]="column"
+            [rows]="table.dataSource.data"
+          ></ceccoff-table-footer>
+        </td>
       </ng-container>
     </ng-container>
 
@@ -111,6 +118,6 @@
         }"
       ></tr>
     </ng-container>
+    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
   </table>
-  <!-- END Table -->
 </div>

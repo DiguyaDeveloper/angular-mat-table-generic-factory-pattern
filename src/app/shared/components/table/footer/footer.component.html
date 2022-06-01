@@ -1,0 +1,13 @@
+{{ column.footer | json }}
+<ng-container *ngIf="column?.footer as footer">
+  <ng-container *ngIf="footer?.templateRef; else elseTemplate">
+    <!-- show templateRef in cell and return data to father component-->
+    <ng-container
+      [ngTemplateOutlet]="footer?.templateRef"
+      [ngTemplateOutletContext]="{ $rowsData: rows }"
+    ></ng-container>
+  </ng-container>
+  <ng-template #elseTemplate>
+    {{ footer?.getValue && footer?.getValue(rows) }}
+  </ng-template>
+</ng-container>
