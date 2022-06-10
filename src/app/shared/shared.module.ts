@@ -1,12 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { TableModule } from "./components/table/table.module";
-import { TableVerticalBadgeComponent } from './components/table-vertical-badge/table-vertical-badge.component';
+import { TableVerticalBadgeComponent } from "./components/table-vertical-badge/table-vertical-badge.component";
+import { TableComponent } from "./components/table/table.component";
 @NgModule({
-  declarations: [
-    TableVerticalBadgeComponent
-  ],
-  imports: [CommonModule, TableModule],
-  exports: [TableModule],
+  declarations: [TableVerticalBadgeComponent],
+  imports: [CommonModule, TableComponent],
+  exports: [TableComponent],
 })
 export class SharedModule {}
