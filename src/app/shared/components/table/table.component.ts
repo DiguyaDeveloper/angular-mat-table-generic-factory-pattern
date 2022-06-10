@@ -10,14 +10,35 @@ import {
 import { TableColumns } from "src/app/core/interfaces/table-columns.interface";
 import { Table } from "./table.class";
 import { ExpandCollapse } from "./table.animations";
-import { MatSort, Sort } from "@angular/material/sort";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatSort, MatSortModule, Sort } from "@angular/material/sort";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSelectModule } from "@angular/material/select";
+import { MatTableModule } from "@angular/material/table";
+import { CommonModule } from "@angular/common";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { CellComponent } from "./cell/cell.component";
+import { HeaderComponent } from "./header/header.component";
 
 @Component({
   selector: "ceccoff-table",
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"],
   animations: [ExpandCollapse],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    CellComponent,
+    HeaderComponent,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+  ],
 })
 export class TableComponent<T> implements OnInit {
   @Input() table: Table<T>;
