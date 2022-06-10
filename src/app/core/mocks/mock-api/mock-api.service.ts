@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { compact, fromPairs } from "lodash-es";
+import * as _ from "lodash";
 import { CeccoffMockApiHandler } from "./mock-api.request-handler";
 import { CeccoffMockApiMethods } from "./mock-api.types";
 
@@ -83,8 +83,8 @@ export class CeccoffMockApiService {
         matchingHandler.handler = handler;
 
         // Extract and assign the parameters
-        matchingHandler.urlParams = fromPairs(
-          compact(
+        matchingHandler.urlParams = _.fromPairs(
+          _.compact(
             handlerUrlParts.map((handlerUrlPart, index) =>
               handlerUrlPart.startsWith(":")
                 ? [handlerUrlPart.substring(1), urlParts[index]]
