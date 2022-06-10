@@ -11,6 +11,9 @@ import { mockApiServices } from "./core/mocks";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { ExampleTableOnlineComponent } from "./modules/example-table-online/example-table-online.component";
 import { ExampleTableOfflineComponent } from "./modules/example-table-offline/example-table-offline.component";
+import { TableOnlineModule } from "./shared/components/table-online/table-online.module";
+import { TableOfflineModule } from "./shared/components/table-offline/table-offline.module";
+import { TableVerticalBadgeModule } from "./shared/components/table-vertical-badge/table-vertical-badge.module";
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { ExampleTableOfflineComponent } from "./modules/example-table-offline/ex
     HttpClientModule,
     SharedModule,
     CeccoffMockApiModule.forRoot(mockApiServices),
+    TableOnlineModule,
+    TableOfflineModule,
+    TableVerticalBadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

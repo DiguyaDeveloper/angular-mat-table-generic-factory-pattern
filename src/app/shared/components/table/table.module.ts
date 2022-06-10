@@ -13,7 +13,7 @@ import { TableOfflineComponent } from "../table-offline/table-offline.component"
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 @NgModule({
-  declarations: [TableComponent, TableOfflineComponent, TableOnlineComponent],
+  declarations: [TableComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -26,7 +26,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     MatPaginatorModule,
     MatProgressBarModule,
   ],
-  exports: [TableComponent, TableOfflineComponent, TableOnlineComponent],
+  exports: [TableComponent],
   providers: [],
 })
 export class TableModule {}
