@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, tap } from "rxjs";
-import { Page } from "src/app/shared/components/table/models/page.model";
+import { Page } from "../models/page.model";
 
 export interface InventoryProduct {
   number: number;

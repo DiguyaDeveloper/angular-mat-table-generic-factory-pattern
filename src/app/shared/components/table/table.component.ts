@@ -86,10 +86,10 @@ export class TableComponent<T> implements OnInit {
   }
 
   clickShowMore(row: T): void {
-    if (this.table.dataExpanded !== row) {
-      this.table.dataExpanded = row;
+    if (this.table.dataExpanded.value !== row) {
+      this.table.dataExpanded.next(row);
     } else {
-      this.table.dataExpanded = undefined;
+      this.table.dataExpanded.next(null);
     }
   }
 }

@@ -7,27 +7,31 @@ import {
   switchMap,
   take,
 } from "rxjs";
-import {
-  TablePage,
-  TableSort,
-} from "src/app/shared/components/table/models/filter.model";
-import { Page } from "src/app/shared/components/table/models/page.model";
+import { TablePage } from "src/app/shared/components/table/models/table-page.model";
+import { TableSort } from "src/app/shared/components/table/models/table-sort.model";
 import { Table } from "src/app/shared/components/table/table.class";
 import { TableColumns } from "../interfaces/table-columns.interface";
 import { TableService } from "../services/list.service";
+import { Page } from "./page.model";
+import { TableFilters } from "./table-filters.model";
 
 export abstract class TablePaginationAbstract<T> {
   table: Table<T> = new Table<T>();
   columns: TableColumns<T>[];
 
   constructor(protected service: TableService<T>, private pathUrl: string) {
-    combineLatest([this.table.currentPage, this.table.currentSort])
+    combineLatest([
+      this.table.currentPage,
+      this.table.currentSort,
+      this.table.currentFilters,
+    ])
       .pipe(
-        switchMap(([sortChange, currentPage]) => {
+        switchMap(([currentSort, currentPage, currentFilters]) => {
           this.table.isLoading = true;
           return this.getAll({
-            ...sortChange,
+            ...currentSort,
             ...currentPage,
+            ...currentFilters,
           });
         }),
         map((data) => {
@@ -50,7 +54,7 @@ export abstract class TablePaginationAbstract<T> {
     size,
     order,
     sort,
-  }: TableSort & TablePage): Observable<Page<T>> {
+  }: TableSort & TablePage & TableFilters): Observable<Page<T>> {
     return this.service
       .getAll(page, size, sort, order, this.pathUrl)
       .pipe(take(1));
